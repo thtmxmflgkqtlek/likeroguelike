@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>U:</strong>
+  <%= @relational.u_id %>
+</p>
+
+<p>
+  <strong>R:</strong>
+  <%= @relational.r_id %>
+</p>
+
+<p>
+  <strong>Start day:</strong>
+  <%= @relational.start_day %>
+</p>
+
+<p>
+  <strong>End day:</strong>
+  <%= @relational.end_day %>
+</p>
+
+<%= link_to 'Edit', edit_rental_relational_path(@rental,@relational) %> |
+<%= link_to 'Back', rental_relationals_path(@rental) %>

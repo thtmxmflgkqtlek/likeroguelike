@@ -1,0 +1,15 @@
+<!-- <h1>Session#new</h1>
+<p>Find me in app/views/session/new.html.erb</p> -->
+
+
+<% if @error %>
+   <%= @error %><br />
+   <% end %>
+<%= form_tag session_url do %>
+  <%= label :name, 'name:' %>
+  <%= text_field_tag :name, @name %><br />
+  <%= label :password, 'password:' %>
+  <%= text_field_tag :password, "" %><br />
+  <%= submit_tag "login" %><br />
+<% end %>
+<%= link_to "sign_in", new_user_url %>

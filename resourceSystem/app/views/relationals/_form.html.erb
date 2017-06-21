@@ -1,0 +1,32 @@
+<%= form_for([@rental,@relational]) do |f| %>
+  <% if @relational.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@relational.errors.count, "error") %> prohibited this relational from being saved:</h2>
+
+      <ul>
+      <% @relational.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= f.label :u_id ,:value => '予約するユーザー名'  %><br>
+    <%= f.text_field :u_id , :class => 'form-control' ,:value => "" %>
+  </div>
+  <div class="field">
+    <%= f.label :r_id ,:value => '予約する資材名'%><br>
+    <%= f.text_field :r_id , :class => 'form-control' ,:value => @rental.name%>
+  </div>
+  <div class="field">
+    <%= f.label :start_day %><br>
+    <%= f.date_select :start_day %>
+  </div>
+  <div class="field">
+    <%= f.label :end_day %><br>
+    <%= f.date_select :end_day %>
+  </div>
+  <div class="actions">
+    <%= f.submit :class => 'btn btn-default', :value => 'GO' %>
+  </div>
+<% end %>
