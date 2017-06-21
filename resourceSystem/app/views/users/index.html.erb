@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>ユーザー一覧</h1>
+
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>Name</th>
+      <th>Password</th>
+      <th>Adm</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% a = 1%>
+    <% @users.each do |user| %>
+      <tr>
+        <th scope="row"><%= a%></th>
+        <td><%= user.name %></td>
+        <td><%= user.password %></td>
+        <td><% if user.adm %>
+              管理者
+            <% else %>
+              一般
+            <% end %>
+        </td>
+        <td><%= link_to '閲覧', user %></td>
+        <td><%= link_to '編集', edit_user_path(user) %></td>
+        <td><%= link_to '消去', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+      <% a += 1%>
+    <% end %>
+  </tbody>
+</table>
+
+
+<br>
+
+<%= link_to '新規登録', new_user_path ,class: "btn btn-default" %>
