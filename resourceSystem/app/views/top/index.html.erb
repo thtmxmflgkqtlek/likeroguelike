@@ -1,3 +1,7 @@
+<script type="text/javascript">
+
+</script>
+
 <div class="text-center">
   <h1>資材管理システムへようこそ！</h1>
   <p>ユーザーログインと資材を予約してください！</p>
@@ -7,74 +11,178 @@
 </div>
 
 
-<table border=5 rules="all">
-  <tr>
-    <td>○</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
 
-  </tr>
-  <tr>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
+<script >
+var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
+                         [1,0,0,1,1, 0,0,0,1,1, 0,0,0,0,1, 1,1],
+                         [1,0,0,1,1, 0,0,0,1,1, 0,0,0,0,0, 1,1],
+                         [1,0,0,0,0, 0,0,0,1,1, 0,0,0,0,0, 0,1],
+                         [1,0,0,0,0, 0,0,0,1,1, 0,0,0,0,0, 0,1],
 
-  </tr>
-  <tr>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
+                         [1,0,0,0,0, 0,0,0,0,0, 0,0,1,0,0, 0,1],
+                         [1,0,0,0,0, 0,0,0,0,0, 0,0,1,0,0, 0,1],
+                         [1,0,0,0,0, 0,0,0,0,0, 0,0,1,0,0, 0,0],
+                         [1,0,0,0,0, 0,0,0,0,0, 0,0,1,0,0, 0,1],
+                         [1,0,0,0,0, 0,0,0,0,0, 0,0,1,1,1, 1,1],
 
-  </tr>
+                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
+                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
+                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
+                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
+                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
 
-  <tr>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
+                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
+                         [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1]];
+                         var imagePath = "img/";
+                         var player_position_x = 8;
+                         var player_position_y = 6;
+                         var imageSize = "30px";
 
-  </tr>
-  <tr>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
+    function generateMapTable(){
+      $("#content").append("<table>");
+      for(var i=0; i<mapSource.length; i++){
+        $("#content").append("<tr>");
+        for(var j=0; j<mapSource.length; j++){
+          $("#content").append("<td class='mapBlock' id='map"+i+"_"+j+"'></td>");
+        }
+        $("#content").append("</tr>");
+      }
+      $("#content").append("</table>");
 
-  </tr>
+    }
 
-  <tr>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
-    <td>　</td>
+    function setMapImage(){
+      var imagePath = "img/";
+      for(var i=0; i<mapSource.length; i++){
+        for(var j=0; j<mapSource.length; j++){
+          if(mapSource[j][i] === 0){
+            $("#map"+j+"_"+i).css("background-image","url('<%= asset_path 'フロイデ.jpeg'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+          }else if(mapSource[j][i] === 1){
+            $("#map"+j+"_"+i).css("background-image","url('<%= asset_path 'ブロック.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+          }
+        }
+      }
+    }
 
-  </tr>
+    function setPlayerImage(){
+      $("#map"+player_position_y+"_"+player_position_x).css("background-image","url('<%= asset_path 'mario.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+    }
+    function movePlayer(input){
+      if(input === "left"){
+        player_position_x--;
+        setPlayerImage();
+      }else if(input === "up"){
+        player_position_y--;
+        setPlayerImage();
+      }
+      else if(input === "right"){
+        player_position_x++;
+        setPlayerImage();
+      }
+      else if(input === "down"){
+        player_position_y++;
+        setPlayerImage();
+      }
+    }
+      $(function(){
+        $("#left").click(function(){setMapImage();movePlayer("left");});
+        $("#up").click(function(){setMapImage();movePlayer("up");});
+        $("#right").click(function(){setMapImage();movePlayer("right");});
+        $("#down").click(function(){setMapImage();movePlayer("down");});
+          generateMapTable();
+          setMapImage();
+          setPlayerImage();
+
+
+      });
+
+    </script>
+    <title></title>
+  </head>
+  <body>
+    <div class="content" id="content">
+
+    </div>
+    <div class="ui" id=ui>
+      <button type="button" name="button" id=left>L</button>
+      <button type="button" name="button" id=up>U</button>
+      <button type="button" name="button" id=right>R</button>
+      <button type="button" name="button" id=down>D</button>
+    </div>
+
+
+
+
+
+<!-- // var mapSource = [[1,1,1,1,1],
+//                 [1,0,0,0,1],
+//                 [1,0,0,0,1],
+//                 [1,0,0,0,1],
+//                 [1,1,1,1,1]];
+//   $(function(){
+//     // generateMap();
+//
+//     for(var i=0; i<mapSource.length; i++){
+//       for(var j=0; j<mapSource.length; j++){
+//         if(mapSource[i][j] === 0){
+//           $("#map"+j+"_"+i).css("background-image","url('<%= asset_path 'フロイデ.jpeg'%>')").css("width","50px").css("height","50px");
+//         }else if(mapSource[i][j] === 1){
+//           $("#map"+j+"_"+i).css("background-image","url('<%= asset_path 'ブロック.gif'%>')").css("width","50px").css("height","50px");
+//         }
+//
+//       }
+//     }
+//   });
+//
+//    </script>
+//
+//
+//
+//
+//
+// <div class=“content” >
+//       <table>
+//         <tr>
+//           <td class="mapBlock" id="map0_0"></td>
+//           <td class="mapBlock" id="map0_1">2</td>
+//           <td class="mapBlock" id="map0_2"></td>
+//           <td class="mapBlock" id="map0_3"></td>
+//           <td class="mapBlock" id="map0_4"></td>
+//         </tr>
+//         <tr>
+//           <td class="mapBlock" id="map1_0"></td>
+//           <td class="mapBlock" id="map1_1"></td>
+//           <td class="mapBlock" id="map1_2"></td>
+//           <td class="mapBlock" id="map1_3"></td>
+//           <td class="mapBlock" id="map1_4"></td>
+//         </tr>
+//         <tr>
+//           <td class="mapBlock" id="map2_0"></td>
+//           <td class="mapBlock" id="map2_1"></td>
+//           <td class="mapBlock" id="map2_2"></td>
+//           <td class="mapBlock" id="map2_3"></td>
+//           <td class="mapBlock" id="map2_4"></td>
+//         </tr>
+//         <tr>
+//           <td class="mapBlock" id="map3_0"></td>
+//           <td class="mapBlock" id="map3_1"></td>
+//           <td class="mapBlock" id="map3_2"></td>
+//           <td class="mapBlock" id="map3_3"></td>
+//           <td class="mapBlock" id="map3_4"></td>
+//         </tr>
+//         <tr>
+//           <td class="mapBlock" id="map4_0"></td>
+//           <td class="mapBlock" id="map4_1"></td>
+//           <td class="mapBlock" id="map4_2"></td>
+//           <td class="mapBlock" id="map4_3"></td>
+//           <td class="mapBlock" id="map4_4"></td>
+//         </tr>
+//       </table>
+//     </div> -->
+
+
+
+
+
 
 </table>
