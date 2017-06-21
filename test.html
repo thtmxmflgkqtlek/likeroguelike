@@ -6,66 +6,102 @@
 
     </script>
     <script type="text/javascript">
-    var mapSource = [[1,1,1,1,1],
-                    [1,0,0,0,1],
-                    [1,0,0,0,1],
-                    [1,0,0,0,1],
-                    [1,1,1,1,1]];
-      $(function(){
-        // generateMap();
-        for(var i=0; i<mapSource.length; i++){
-          for(var j=0; j<mapSource.length; j++){
-            if(mapSource[i][j] === 0){
-              $("#map"+j+"_"+i).css("background-image","url('img/floor.png')").css("width","50px").css("height","50px");
-            }else if(mapSource[i][j] === 1){
-              $("#map"+j+"_"+i).css("background-image","url('img/block.gif')").css("width","50px").css("height","50px");
-            }
+        var mapSource = [[1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
+                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
+                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
+                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
+                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
+
+                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
+                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
+                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
+                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
+                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
+
+                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
+                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
+                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
+                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
+                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
+
+                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
+                         [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1]];
+                         var imagePath = "img/";
+                         var player_position_x = 8;
+                         var player_position_y = 6;
+                         var imageSize = "30px";
+
+    function generateMapTable(){
+      $("#content").append("<table>");
+      for(var i=0; i<mapSource.length; i++){
+        $("#content").append("<tr>");
+        for(var j=0; j<mapSource.length; j++){
+          $("#content").append("<td class='mapBlock' id='map"+i+"_"+j+"'></td>");
+        }
+        $("#content").append("</tr>");
+      }
+      $("#content").append("</table>");
+
+    }
+
+    function setMapImage(){
+      var imagePath = "img/";
+      for(var i=0; i<mapSource.length; i++){
+        for(var j=0; j<mapSource.length; j++){
+          if(mapSource[i][j] === 0){
+            $("#map"+j+"_"+i).css("background-image","url('"+imagePath+"brick.png')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+          }else if(mapSource[i][j] === 1){
+            $("#map"+j+"_"+i).css("background-image","url('"+imagePath+"block.gif')").css("width",imageSize).css("height",imageSize).css("background-position","center");
           }
         }
+      }
+    }
+
+    function setPlayerImage(){
+      setMapImage();
+      $("#map"+player_position_y+"_"+player_position_x).css("background-image","url('"+imagePath+"player.png')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+    }
+    function movePlayer(input){
+      if(input === "left"){
+        player_position_x--;
+        setPlayerImage();
+      }else if(input === "up"){
+        player_position_y--;
+        setPlayerImage();
+      }
+      else if(input === "right"){
+        player_position_x++;
+        setPlayerImage();
+      }
+      else if(input === "down"){
+        player_position_y++;
+        setPlayerImage();
+      }
+    }
+      $(function(){
+        $("#left").click(function(){movePlayer("left");});
+        $("#up").click(function(){movePlayer("up");});
+        $("#right").click(function(){movePlayer("right");});
+        $("#down").click(function(){movePlayer("down");});
+          generateMapTable();
+          setMapImage();
+          setPlayerImage();
+
+
       });
 
     </script>
     <title></title>
   </head>
   <body>
-    <div class="content">
-      <table>
-        <tr>
-          <td class="mapBlock" id="map0_0"></td>
-          <td class="mapBlock" id="map0_1"></td>
-          <td class="mapBlock" id="map0_2"></td>
-          <td class="mapBlock" id="map0_3"></td>
-          <td class="mapBlock" id="map0_4"></td>
-        </tr>
-        <tr>
-          <td class="mapBlock" id="map1_0"></td>
-          <td class="mapBlock" id="map1_1"></td>
-          <td class="mapBlock" id="map1_2"></td>
-          <td class="mapBlock" id="map1_3"></td>
-          <td class="mapBlock" id="map1_4"></td>
-        </tr>
-        <tr>
-          <td class="mapBlock" id="map2_0"></td>
-          <td class="mapBlock" id="map2_1"></td>
-          <td class="mapBlock" id="map2_2"></td>
-          <td class="mapBlock" id="map2_3"></td>
-          <td class="mapBlock" id="map2_4"></td>
-        </tr>
-        <tr>
-          <td class="mapBlock" id="map3_0"></td>
-          <td class="mapBlock" id="map3_1"></td>
-          <td class="mapBlock" id="map3_2"></td>
-          <td class="mapBlock" id="map3_3"></td>
-          <td class="mapBlock" id="map3_4"></td>
-        </tr>
-        <tr>
-          <td class="mapBlock" id="map4_0"></td>
-          <td class="mapBlock" id="map4_1"></td>
-          <td class="mapBlock" id="map4_2"></td>
-          <td class="mapBlock" id="map4_3"></td>
-          <td class="mapBlock" id="map4_4"></td>
-        </tr>
-      </table>
+    <div class="content" id="content">
+
+    </div>
+    <div class="ui" id=ui>
+      <button type="button" name="button" id=left>L</button>
+      <button type="button" name="button" id=up>U</button>
+      <button type="button" name="button" id=right>R</button>
+      <button type="button" name="button" id=down>D</button>
     </div>
   </body>
 </html>
