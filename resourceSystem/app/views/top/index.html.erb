@@ -36,13 +36,15 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
                          var imagePath = "img/";
                          var player_position_x = 8;
                          var player_position_y = 6;
-                         var enemy_position_x = 5;
-                         var enemy_position_y = 4;
+                         var enemy_position_x = 2;
+                         var enemy_position_y = 2;
+                         var item_positon_x = 8;
+                         var item_positon_y = 7;
                          var imageSize = "30px";
-                         var MaxHp = "30";
-                         var NowHp = "30";
-                         var Atack = "3";
-                         var Defence = "1";
+                         var maxHp = "30";
+                         var nowHp = "30";
+                         var atack = "3";
+                         var defence = "1";
 
     function generateMapTable(){
       $("#content").append("<table>");
@@ -76,6 +78,10 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
     function setEnemyImage(){
       $(`#map${enemy_position_y}_${enemy_position_x}`).css("background-image","url('<%= asset_path 'chocobo.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
     }
+    function setItemImage(){
+      $(`#map${item_positon_y}_${item_positon_x}`).css("background-image","url('<%= asset_path 'ItemBox.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+    }
+
 
     function movePlayer(input){
       if(input === "left"){
@@ -132,9 +138,9 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
       }
     }
     function renderText(){
-      $("#HP").append(`HP:${NowHp}/${MaxHp}`);
-      $("#ATK").append(`ATK:${Atack}`);
-      $("#DEF").append(`DEF:${Defence}`);
+      $("#HP").append(`HP:${nowHp}/${maxHp}`);
+      $("#ATK").append(`ATK:${atack}`);
+      $("#DEF").append(`DEF:${defence}`);
     }
 
       $(function(){
@@ -145,6 +151,7 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
             movePlayer("left");
             setPlayerImage();
             setEnemyImage();
+            setItemImage();
         }});
         $("#up").click(function(){
           if(mapSource[player_position_y-1][player_position_x] !== 1){
@@ -153,6 +160,7 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
             movePlayer("up");
             setPlayerImage();
             setEnemyImage();
+            setItemImage();
         }});
         $("#right").click(function(){
           if(mapSource[player_position_y][player_position_x+1] !== 1){
@@ -161,6 +169,7 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
           movePlayer("right");
           setPlayerImage();
           setEnemyImage();
+          setItemImage();
         }});
         $("#down").click(function(){
           if(mapSource[player_position_y+1][player_position_x] !== 1){
@@ -169,12 +178,14 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
             movePlayer("down");
             setPlayerImage();
             setEnemyImage();
+            setItemImage();
         }});
         //onLoad
         generateMapTable();
         setMapImage();
         setPlayerImage();
         setEnemyImage();
+        setItemImage();
         renderText();
 
 
@@ -202,80 +213,6 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
       </div>
       <div class="DEF" id="DEF">
       </div>
+      <div class="Text" id="Text">
+      </div>
     </div>
-
-
-
-
-<!-- // var mapSource = [[1,1,1,1,1],
-//                 [1,0,0,0,1],
-//                 [1,0,0,0,1],
-//                 [1,0,0,0,1],
-//                 [1,1,1,1,1]];
-//   $(function(){
-//     // generateMap();
-//
-//     for(var i=0; i<mapSource.length; i++){
-//       for(var j=0; j<mapSource.length; j++){
-//         if(mapSource[i][j] === 0){
-//           $("#map"+j+"_"+i).css("background-image","url('<%= asset_path 'フロイデ.jpeg'%>')").css("width","50px").css("height","50px");
-//         }else if(mapSource[i][j] === 1){
-//           $("#map"+j+"_"+i).css("background-image","url('<%= asset_path 'ブロック.gif'%>')").css("width","50px").css("height","50px");
-//         }
-//
-//       }
-//     }
-//   });
-//
-//    </script>
-//
-//
-//
-//
-//
-// <div class=“content” >
-//       <table>
-//         <tr>
-//           <td class="mapBlock" id="map0_0"></td>
-//           <td class="mapBlock" id="map0_1">2</td>
-//           <td class="mapBlock" id="map0_2"></td>
-//           <td class="mapBlock" id="map0_3"></td>
-//           <td class="mapBlock" id="map0_4"></td>
-//         </tr>
-//         <tr>
-//           <td class="mapBlock" id="map1_0"></td>
-//           <td class="mapBlock" id="map1_1"></td>
-//           <td class="mapBlock" id="map1_2"></td>
-//           <td class="mapBlock" id="map1_3"></td>
-//           <td class="mapBlock" id="map1_4"></td>
-//         </tr>
-//         <tr>
-//           <td class="mapBlock" id="map2_0"></td>
-//           <td class="mapBlock" id="map2_1"></td>
-//           <td class="mapBlock" id="map2_2"></td>
-//           <td class="mapBlock" id="map2_3"></td>
-//           <td class="mapBlock" id="map2_4"></td>
-//         </tr>
-//         <tr>
-//           <td class="mapBlock" id="map3_0"></td>
-//           <td class="mapBlock" id="map3_1"></td>
-//           <td class="mapBlock" id="map3_2"></td>
-//           <td class="mapBlock" id="map3_3"></td>
-//           <td class="mapBlock" id="map3_4"></td>
-//         </tr>
-//         <tr>
-//           <td class="mapBlock" id="map4_0"></td>
-//           <td class="mapBlock" id="map4_1"></td>
-//           <td class="mapBlock" id="map4_2"></td>
-//           <td class="mapBlock" id="map4_3"></td>
-//           <td class="mapBlock" id="map4_4"></td>
-//         </tr>
-//       </table>
-//     </div> -->
-
-
-
-
-
-
-</table>
