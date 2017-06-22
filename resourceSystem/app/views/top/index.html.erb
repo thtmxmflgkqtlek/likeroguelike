@@ -56,9 +56,9 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
       for(var i=0; i<mapSource.length; i++){
         for(var j=0; j<mapSource.length; j++){
           if(mapSource[j][i] === 0){
-            $("#map"+j+"_"+i).css("background-image","url('<%= asset_path 'フロイデ.jpeg'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+            $("#map"+j+"_"+i).css("background-image","url('<%= asset_path 'brick.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
           }else if(mapSource[j][i] === 1){
-            $("#map"+j+"_"+i).css("background-image","url('<%= asset_path 'ブロック.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+            $("#map"+j+"_"+i).css("background-image","url('<%= asset_path 'block.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
           }
         }
       }
@@ -70,28 +70,45 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
     function movePlayer(input){
       if(input === "left"){
         player_position_x--;
-        setPlayerImage();
       }else if(input === "up"){
         player_position_y--;
-        setPlayerImage();
       }
       else if(input === "right"){
         player_position_x++;
-        setPlayerImage();
       }
       else if(input === "down"){
         player_position_y++;
-        setPlayerImage();
       }
     }
       $(function(){
-        $("#left").click(function(){setMapImage();movePlayer("left");});
-        $("#up").click(function(){setMapImage();movePlayer("up");});
-        $("#right").click(function(){setMapImage();movePlayer("right");});
-        $("#down").click(function(){setMapImage();movePlayer("down");});
-          generateMapTable();
+        $("#left").click(function(){
+          if(mapSource[player_position_y][player_position_x-1] !== 1){
+            setMapImage();
+            movePlayer("left");
+            setPlayerImage();
+        }});
+        $("#up").click(function(){
+          if(mapSource[player_position_y-1][player_position_x] !== 1){
+            setMapImage();
+            movePlayer("up");
+            setPlayerImage();
+        }});
+        $("#right").click(function(){
+          if(mapSource[player_position_y][player_position_x+1] !== 1){
           setMapImage();
+          movePlayer("right");
           setPlayerImage();
+        }});
+        $("#down").click(function(){
+          if(mapSource[player_position_y+1][player_position_x] !== 1){
+            setMapImage();
+            movePlayer("down");
+            setPlayerImage();
+        }});
+        //onLoad
+        generateMapTable();
+        setMapImage();
+        setPlayerImage();
 
 
       });
