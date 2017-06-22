@@ -17,34 +17,33 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
                          [1,0,0,1,1, 0,0,0,1,1, 0,0,0,0,1, 1,1],
                          [1,0,0,1,1, 0,0,0,1,1, 0,0,0,0,0, 1,1],
                          [1,0,0,0,0, 0,0,0,1,1, 0,0,0,0,0, 0,1],
-                         [1,0,0,0,0, 0,0,0,1,1, 0,0,0,0,0, 0,1],
+                         [1,0,0,0,0, 0,0,0,1,1, 0,0,2,0,0, 0,1],
 
                          [1,0,0,0,0, 0,0,0,0,0, 0,0,1,0,0, 0,1],
                          [1,0,0,0,0, 0,0,0,0,0, 0,0,1,0,0, 0,1],
-                         [1,0,0,0,0, 0,0,0,0,0, 0,0,1,0,0, 0,0],
+                         [1,0,0,0,0, 0,0,2,0,0, 0,0,1,0,0, 0,4],
                          [1,0,0,0,0, 0,0,0,0,0, 0,0,1,0,0, 0,1],
                          [1,0,0,0,0, 0,0,0,0,0, 0,0,1,1,1, 1,1],
 
                          [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
                          [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
                          [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
-                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
+                         [1,0,2,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
                          [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
 
                          [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
                          [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1]];
+                         var itemgetcount = 0;
                          var imagePath = "img/";
                          var player_position_x = 8;
                          var player_position_y = 6;
                          var enemy_position_x = 2;
                          var enemy_position_y = 2;
-                         var item_positon_x = 8;
-                         var item_positon_y = 7;
                          var imageSize = "30px";
-                         var maxHp = "30";
-                         var nowHp = "30";
-                         var atack = "3";
-                         var defence = "1";
+                         var maxHp = 30;
+                         var nowHp = 30;
+                         var atack = 3;
+                         var defence = 1;
 
     function generateMapTable(){
       $("#content").append("<table>");
@@ -67,6 +66,11 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
             $(`#map${j}_${i}`).css("background-image","url('<%= asset_path 'brick.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
           }else if(mapSource[j][i] === 1){
             $(`#map${j}_${i}`).css("background-image","url('<%= asset_path 'block.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+          }else if(mapSource[j][i] === 2){
+            $(`#map${j}_${i}`).css("background-image","url('<%= asset_path 'ItemBox.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+          }else if(mapSource[j][i] === 3){
+          }else if(mapSource[j][i] === 4){
+            $(`#map${j}_${i}`).css("background-image","url('<%= asset_path 'exit.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
           }
         }
       }
@@ -76,10 +80,7 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
       $(`#map${player_position_y}_${player_position_x}`).css("background-image","url('<%= asset_path 'mario.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
     }
     function setEnemyImage(){
-      $(`#map${enemy_position_y}_${enemy_position_x}`).css("background-image","url('<%= asset_path 'chocobo.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
-    }
-    function setItemImage(){
-      $(`#map${item_positon_y}_${item_positon_x}`).css("background-image","url('<%= asset_path 'ItemBox.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+      $(`#map${enemy_position_y}_${enemy_position_x}`).css("background-image","url('<%= asset_path 'srime.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
     }
 
 
@@ -138,9 +139,10 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
       }
     }
     function renderText(){
-      $("#HP").append(`HP:${nowHp}/${maxHp}`);
-      $("#ATK").append(`ATK:${atack}`);
-      $("#DEF").append(`DEF:${defence}`);
+      $("#HP").text(`HP:${nowHp}/${maxHp}`);
+      $("#ATK").text(`ATK:${atack}`);
+      $("#DEF").text(`DEF:${defence}`);
+      $("#itemgetcount").text(`入手した宝箱の数:${itemgetcount}`);
     }
 
       $(function(){
@@ -151,8 +153,14 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
             movePlayer("left");
             setPlayerImage();
             setEnemyImage();
-            setItemImage();
-        }});
+        }
+        if (mapSource[player_position_y][player_position_x] === 2) {
+            $("#Text").append(`アイテムを取得しました。<br>`);
+            mapSource[player_position_y][player_position_x] = 0;
+            itemgetcount++;
+            renderText();
+        }
+        });
         $("#up").click(function(){
           if(mapSource[player_position_y-1][player_position_x] !== 1){
             setMapImage();
@@ -160,8 +168,14 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
             movePlayer("up");
             setPlayerImage();
             setEnemyImage();
-            setItemImage();
-        }});
+        }
+        if (mapSource[player_position_y][player_position_x] === 2) {
+          $("#Text").append(`アイテムを取得しました。<br>`);
+          mapSource[player_position_y][player_position_x] = 0;
+          itemgetcount++;
+          renderText();
+        }
+        });
         $("#right").click(function(){
           if(mapSource[player_position_y][player_position_x+1] !== 1){
           setMapImage();
@@ -169,8 +183,14 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
           movePlayer("right");
           setPlayerImage();
           setEnemyImage();
-          setItemImage();
-        }});
+        }
+        if (mapSource[player_position_y][player_position_x] === 2) {
+          $("#Text").append(`アイテムを取得しました。<br>`);
+          mapSource[player_position_y][player_position_x] = 0;
+          itemgetcount++;
+          renderText();
+        }
+        });
         $("#down").click(function(){
           if(mapSource[player_position_y+1][player_position_x] !== 1){
             setMapImage();
@@ -178,14 +198,19 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
             movePlayer("down");
             setPlayerImage();
             setEnemyImage();
-            setItemImage();
-        }});
+        }
+        if (mapSource[player_position_y][player_position_x] === 2) {
+          $("#Text").append(`アイテムを取得しました。<br>`);
+          mapSource[player_position_y][player_position_x] = 0;
+          itemgetcount++;
+          renderText();
+        }
+        });
         //onLoad
         generateMapTable();
         setMapImage();
         setPlayerImage();
         setEnemyImage();
-        setItemImage();
         renderText();
 
 
@@ -212,6 +237,8 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
       <div class="ATK" id="ATK">
       </div>
       <div class="DEF" id="DEF">
+      </div>
+      <div class="itemgetcount" id="itemgetcount">
       </div>
       <div class="Text" id="Text">
       </div>
