@@ -1,0 +1,13 @@
+<h1>今回の取得アイテム</h1>
+<p>装備変更をする際は下のプルタブから</p>
+<table>
+
+<% @datas.each do |data| %>
+<tr>
+  <td><%= data.name %></td>
+  <td><%= data.health %></td>
+  <td><%= data.attack %></td>
+  <td><%= data.defense %></td>
+</tr>
+<% end %>
+</table>
