@@ -90,15 +90,45 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
         player_position_y++;
       }
     }
-    function moveEnemy(player_position_y,player_position_x){
-      if (enemy_position_x > player_position_x) {
-        enemy_position_x--;
-      }else if (enemy_position_x < player_position_x) {
-        enemy_position_x++;
-      }else if (enemy_position_y > player_position_y) {
-        enemy_position_y--;
-      }else if (enemy_position_y < player_position_y) {
-        enemy_position_y++;
+    function moveEnemy(){
+      if(Math.abs(enemy_position_x-player_position_x) > Math.abs(enemy_position_y-player_position_y)){
+        if (enemy_position_x > player_position_x) {
+          if(mapSource[enemy_position_y][enemy_position_x-1] !== 1){
+            enemy_position_x--;
+          }else if(mapSource[enemy_position_y+1][enemy_position_x] !== 1){
+            enemy_position_y++;
+          }else if(mapSource[enemy_position_y-1][enemy_position_x] !== 1){
+            enemy_position_y--;
+          }
+
+        }else if (enemy_position_x < player_position_x) {
+          if(mapSource[enemy_position_y][enemy_position_x+1] !== 1){
+            enemy_position_x++;
+          }else if(mapSource[enemy_position_y+1][enemy_position_x] !== 1){
+            enemy_position_y++;
+          }else if(mapSource[enemy_position_y-1][enemy_position_x] !== 1){
+            enemy_position_y--;
+          }
+        }
+      }else{
+        if (enemy_position_y > player_position_y) {
+          if(mapSource[enemy_position_y-1][enemy_position_x] !== 1){
+            enemy_position_y--;
+          }else if(mapSource[enemy_position_y][enemy_position_x+1] !== 1){
+            enemy_position_x++;
+          }else if(mapSource[enemy_position_y][enemy_position_x-1] !== 1){
+            enemy_position_x--;
+          }
+
+        }else if (enemy_position_y < player_position_y) {
+          if(mapSource[enemy_position_y+1][enemy_position_x] !== 1){
+            enemy_position_y++;
+          }else if(mapSource[enemy_position_y][enemy_position_x+1] !== 1){
+            enemy_position_x++;
+          }else if(mapSource[enemy_position_y][enemy_position_x-1] !== 1){
+            enemy_position_x--;
+          }
+        }
       }
     }
     function renderText(){
@@ -111,32 +141,32 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
         $("#left").click(function(){
           if(mapSource[player_position_y][player_position_x-1] !== 1){
             setMapImage();
+            moveEnemy();
             movePlayer("left");
-            moveEnemy(player_position_y,player_position_x);
             setPlayerImage();
             setEnemyImage();
         }});
         $("#up").click(function(){
           if(mapSource[player_position_y-1][player_position_x] !== 1){
             setMapImage();
+            moveEnemy();
             movePlayer("up");
-            moveEnemy(player_position_y,player_position_x);
             setPlayerImage();
             setEnemyImage();
         }});
         $("#right").click(function(){
           if(mapSource[player_position_y][player_position_x+1] !== 1){
           setMapImage();
+          moveEnemy();
           movePlayer("right");
-          moveEnemy(player_position_y,player_position_x);
           setPlayerImage();
           setEnemyImage();
         }});
         $("#down").click(function(){
           if(mapSource[player_position_y+1][player_position_x] !== 1){
             setMapImage();
+            moveEnemy();
             movePlayer("down");
-            moveEnemy(player_position_y,player_position_x);
             setPlayerImage();
             setEnemyImage();
         }});
