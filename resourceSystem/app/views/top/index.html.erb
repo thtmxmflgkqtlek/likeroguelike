@@ -33,20 +33,6 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
 
                          [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
                          [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1]];
-<<<<<<< HEAD
-                         var itemgetcount = 0;
-                         var imagePath = "img/";
-                         var player_position_x = 8;
-                         var player_position_y = 6;
-
-                         var enemy_position_x = [2,15];
-                         var enemy_position_y = [2,15];
-
-                         var imageSize = "30px";
-                         var maxHp = 30;
-                         var nowHp = 30;
-                         var atack = 3;
-=======
                          var itemGetCount = 0;
                          var imagePath = "img/";
                          var player_position_x = 8;
@@ -57,7 +43,6 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
                          var maxHp = 30;
                          var nowHp = 30;
                          var attack = 3;
->>>>>>> rails
                          var defence = 1;
 
     function generateMapTable(){
@@ -162,15 +147,9 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
   }
     function renderText(){
       $("#HP").text(`HP:${nowHp}/${maxHp}`);
-<<<<<<< HEAD
-      $("#ATK").text(`ATK:${atack}`);
-      $("#DEF").text(`DEF:${defence}`);
-      $("#itemgetcount").text(`入手した宝箱の数:${itemgetcount}`);
-=======
       $("#ATK").text(`ATK:${attack}`);
       $("#DEF").text(`DEF:${defence}`);
       $("#itemGetCount").text(`入手した宝箱の数:${itemGetCount}`);
->>>>>>> rails
     }
     function battleProcess(){
       alert("combat!");
@@ -198,18 +177,12 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
         if (mapSource[player_position_y][player_position_x] === 2) {
           $("#Text").append(`アイテムを取得しました。<br>`);
           mapSource[player_position_y][player_position_x] = 0;
-<<<<<<< HEAD
-          itemgetcount++;
-          renderText();
-        }
-=======
           itemGetCount++;
           renderText();
         }
         if (mapSource[player_position_y][player_position_x] === 4) {
           alert("次のマップにいきますか？");
         }
->>>>>>> rails
       });
 
       $("#up").click(function(){
@@ -225,18 +198,12 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
         if (mapSource[player_position_y][player_position_x] === 2) {
           $("#Text").append(`アイテムを取得しました。<br>`);
           mapSource[player_position_y][player_position_x] = 0;
-<<<<<<< HEAD
-          itemgetcount++;
-          renderText();
-        }
-=======
           itemGetCount++;
           renderText();
         }
         if (mapSource[player_position_y][player_position_x] === 4) {
           alert("asds");
         }
->>>>>>> rails
       });
 
       $("#right").click(function(){
@@ -252,11 +219,6 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
         if (mapSource[player_position_y][player_position_x] === 2) {
           $("#Text").append(`アイテムを取得しました。<br>`);
           mapSource[player_position_y][player_position_x] = 0;
-<<<<<<< HEAD
-          itemgetcount++;
-          renderText();
-        }
-=======
           itemGetCount++;
           renderText();
         }
@@ -269,7 +231,6 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
           		} else {
           			// hogehoge
           		}}
->>>>>>> rails
       });
 
       $("#down").click(function(){
@@ -285,18 +246,12 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
         if (mapSource[player_position_y][player_position_x] === 2) {
           $("#Text").append(`アイテムを取得しました。<br>`);
           mapSource[player_position_y][player_position_x] = 0;
-<<<<<<< HEAD
-          itemgetcount++;
-          renderText();
-        }
-=======
           itemGetCount++;
           renderText();
         }
         if (mapSource[player_position_y][player_position_x] === 4) {
           alert("asds");
         }
->>>>>>> rails
       });
       //onLoad
       generateMapTable();
@@ -330,16 +285,11 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
       </div>
       <div class="DEF" id="DEF">
       </div>
-<<<<<<< HEAD
-      <div class="itemgetcount" id="itemgetcount">
-      </div>
-=======
       <form class="form"  id="form" action="http://localhost:3000/users" method="get">
         <div class="itemCount" id="itemCount">
         </div>
         <input type="hidden" id="itemGetCount" name="itemGetCount" value=0>
       </form>
->>>>>>> rails
       <div class="Text" id="Text">
       </div>
     </div>
