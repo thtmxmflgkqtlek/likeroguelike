@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170615072113) do
+ActiveRecord::Schema.define(version: 20170622010806) do
 
   create_table "relationals", force: :cascade do |t|
     t.string   "u_id"
@@ -32,6 +32,15 @@ ActiveRecord::Schema.define(version: 20170615072113) do
     t.string   "name"
     t.string   "password"
     t.boolean  "adm"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "weapons", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "health"
+    t.integer  "attack"
+    t.integer  "defense"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
