@@ -36,7 +36,13 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
                          var imagePath = "img/";
                          var player_position_x = 8;
                          var player_position_y = 6;
+                         var enemy_position_x = 5;
+                         var enemy_position_y = 4;
                          var imageSize = "30px";
+                         var MaxHp = "30";
+                         var NowHp = "30";
+                         var Atack = "3";
+                         var Defence = "1";
 
     function generateMapTable(){
       $("#content").append("<table>");
@@ -56,17 +62,21 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
       for(var i=0; i<mapSource.length; i++){
         for(var j=0; j<mapSource.length; j++){
           if(mapSource[j][i] === 0){
-            $("#map"+j+"_"+i).css("background-image","url('<%= asset_path 'brick.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+            $(`#map${j}_${i}`).css("background-image","url('<%= asset_path 'brick.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
           }else if(mapSource[j][i] === 1){
-            $("#map"+j+"_"+i).css("background-image","url('<%= asset_path 'block.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+            $(`#map${j}_${i}`).css("background-image","url('<%= asset_path 'block.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
           }
         }
       }
     }
 
     function setPlayerImage(){
-      $("#map"+player_position_y+"_"+player_position_x).css("background-image","url('<%= asset_path 'mario.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+      $(`#map${player_position_y}_${player_position_x}`).css("background-image","url('<%= asset_path 'mario.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
     }
+    function setEnemyImage(){
+      $(`#map${enemy_position_y}_${enemy_position_x}`).css("background-image","url('<%= asset_path 'chocobo.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+    }
+
     function movePlayer(input){
       if(input === "left"){
         player_position_x--;
@@ -80,35 +90,63 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
         player_position_y++;
       }
     }
+    function moveEnemy(player_position_y,player_position_x){
+      if (enemy_position_x > player_position_x) {
+        enemy_position_x--;
+      }else if (enemy_position_x < player_position_x) {
+        enemy_position_x++;
+      }else if (enemy_position_y > player_position_y) {
+        enemy_position_y--;
+      }else if (enemy_position_y < player_position_y) {
+        enemy_position_y++;
+      }
+    }
+    function renderText(){
+      $("#HP").append(`HP:${NowHp}/${MaxHp}`);
+      $("#ATK").append(`ATK:${Atack}`);
+      $("#DEF").append(`DEF:${Defence}`);
+    }
+
       $(function(){
         $("#left").click(function(){
           if(mapSource[player_position_y][player_position_x-1] !== 1){
             setMapImage();
             movePlayer("left");
+            moveEnemy(player_position_y,player_position_x);
             setPlayerImage();
+            setEnemyImage();
         }});
         $("#up").click(function(){
           if(mapSource[player_position_y-1][player_position_x] !== 1){
             setMapImage();
             movePlayer("up");
+            moveEnemy(player_position_y,player_position_x);
             setPlayerImage();
+            setEnemyImage();
         }});
         $("#right").click(function(){
           if(mapSource[player_position_y][player_position_x+1] !== 1){
           setMapImage();
           movePlayer("right");
+          moveEnemy(player_position_y,player_position_x);
           setPlayerImage();
+          setEnemyImage();
         }});
         $("#down").click(function(){
           if(mapSource[player_position_y+1][player_position_x] !== 1){
             setMapImage();
             movePlayer("down");
+            moveEnemy(player_position_y,player_position_x);
             setPlayerImage();
+            setEnemyImage();
         }});
         //onLoad
         generateMapTable();
         setMapImage();
         setPlayerImage();
+        setEnemyImage();
+        renderText();
+
 
 
       });
@@ -127,6 +165,14 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
       <button type="button" name="button" id=down>D</button>
     </div>
 
+    <div class="SystemText" id="SystemText">
+      <div class="HP" id="HP">
+      </div>
+      <div class="ATK" id="ATK">
+      </div>
+      <div class="DEF" id="DEF">
+      </div>
+    </div>
 
 
 
