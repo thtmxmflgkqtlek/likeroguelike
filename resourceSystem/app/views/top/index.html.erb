@@ -36,8 +36,8 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
                          var imagePath = "img/";
                          var player_position_x = 8;
                          var player_position_y = 6;
-                         var enemy_position_x = 2;
-                         var enemy_position_y = 2;
+                         var enemy_position_x = [2,15];
+                         var enemy_position_y = [2,15];
                          var item_positon_x = 8;
                          var item_positon_y = 7;
                          var imageSize = "30px";
@@ -76,7 +76,9 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
       $(`#map${player_position_y}_${player_position_x}`).css("background-image","url('<%= asset_path 'mario.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
     }
     function setEnemyImage(){
-      $(`#map${enemy_position_y}_${enemy_position_x}`).css("background-image","url('<%= asset_path 'chocobo.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+      for(var i=0; i<enemy_position_x.length; i++){
+      $(`#map${enemy_position_y[i]}_${enemy_position_x[i]}`).css("background-image","url('<%= asset_path 'srime.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+      }
     }
     function setItemImage(){
       $(`#map${item_positon_y}_${item_positon_x}`).css("background-image","url('<%= asset_path 'ItemBox.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
@@ -97,54 +99,66 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
       }
     }
     function moveEnemy(){
-      if(Math.abs(enemy_position_x-player_position_x) > Math.abs(enemy_position_y-player_position_y)){
-        if (enemy_position_x > player_position_x) {
-          if(mapSource[enemy_position_y][enemy_position_x-1] !== 1){
-            enemy_position_x--;
-          }else if(mapSource[enemy_position_y+1][enemy_position_x] !== 1){
-            enemy_position_y++;
-          }else if(mapSource[enemy_position_y-1][enemy_position_x] !== 1){
-            enemy_position_y--;
+      for(var i=0; i<enemy_position_x.length; i++){
+      if(Math.abs(enemy_position_x[i]-player_position_x) > Math.abs(enemy_position_y[i]-player_position_y)){
+        if (enemy_position_x[i] > player_position_x) {
+          if(mapSource[enemy_position_y[i]][enemy_position_x[i]-1] !== 1){
+            enemy_position_x[i]--;
+          }else if(mapSource[enemy_position_y[i]+1][enemy_position_x[i]] !== 1){
+            enemy_position_y[i]++;
+          }else if(mapSource[enemy_position_y[i]-1][enemy_position_x[i]] !== 1){
+            enemy_position_y[i]--;
           }
 
-        }else if (enemy_position_x < player_position_x) {
-          if(mapSource[enemy_position_y][enemy_position_x+1] !== 1){
-            enemy_position_x++;
-          }else if(mapSource[enemy_position_y+1][enemy_position_x] !== 1){
-            enemy_position_y++;
-          }else if(mapSource[enemy_position_y-1][enemy_position_x] !== 1){
-            enemy_position_y--;
+        }else if (enemy_position_x[i] < player_position_x) {
+          if(mapSource[enemy_position_y[i]][enemy_position_x[i]+1] !== 1){
+            enemy_position_x[i]++;
+          }else if(mapSource[enemy_position_y[i]+1][enemy_position_x[i]] !== 1){
+            enemy_position_y[i]++;
+          }else if(mapSource[enemy_position_y[i]-1][enemy_position_x[i]] !== 1){
+            enemy_position_y[i]--;
           }
         }
       }else{
-        if (enemy_position_y > player_position_y) {
-          if(mapSource[enemy_position_y-1][enemy_position_x] !== 1){
-            enemy_position_y--;
-          }else if(mapSource[enemy_position_y][enemy_position_x+1] !== 1){
-            enemy_position_x++;
-          }else if(mapSource[enemy_position_y][enemy_position_x-1] !== 1){
-            enemy_position_x--;
+        if (enemy_position_y[i] > player_position_y) {
+          if(mapSource[enemy_position_y[i]-1][enemy_position_x[i]] !== 1){
+            enemy_position_y[i]--;
+          }else if(mapSource[enemy_position_y[i]][enemy_position_x[i]+1] !== 1){
+            enemy_position_x[i]++;
+          }else if(mapSource[enemy_position_y[i]][enemy_position_x[i]-1] !== 1){
+            enemy_position_x[i]--;
           }
 
-        }else if (enemy_position_y < player_position_y) {
-          if(mapSource[enemy_position_y+1][enemy_position_x] !== 1){
-            enemy_position_y++;
-          }else if(mapSource[enemy_position_y][enemy_position_x+1] !== 1){
-            enemy_position_x++;
-          }else if(mapSource[enemy_position_y][enemy_position_x-1] !== 1){
+        }else if (enemy_position_y[i] < player_position_y) {
+          if(mapSource[enemy_position_y[i]+1][enemy_position_x[i]] !== 1){
+            enemy_position_y[i]++;
+          }else if(mapSource[enemy_position_y[i]][enemy_position_x[i]+1] !== 1){
+            enemy_position_x[i]++;
+          }else if(mapSource[enemy_position_y[i]][enemy_position_x-1] !== 1){
             enemy_position_x--;
           }
         }
       }
     }
+  }
     function renderText(){
       $("#HP").append(`HP:${nowHp}/${maxHp}`);
       $("#ATK").append(`ATK:${atack}`);
       $("#DEF").append(`DEF:${defence}`);
     }
-
+    function battleProcess(){
+      alert("combat!");
+    }
+    function closeToCombat(){
+      for(var i=0; i<enemy_position_x.length; i++){
+        if(Math.abs(player_position_x-enemy_position_x[i]) === 1 && Math.abs(player_position_y-enemy_position_y[i]) === 1){
+          return true;
+        }
+      }
+    }
       $(function(){
         $("#left").click(function(){
+          if(closeToCombat()){battleProcess();}else{
           if(mapSource[player_position_y][player_position_x-1] !== 1){
             setMapImage();
             moveEnemy();
@@ -152,17 +166,19 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
             setPlayerImage();
             setEnemyImage();
             setItemImage();
-        }});
+        }}});
         $("#up").click(function(){
-          if(mapSource[player_position_y-1][player_position_x] !== 1){
+          if(closeToCombat()){battleProcess();}else{
+            if(mapSource[player_position_y-1][player_position_x] !== 1){
             setMapImage();
             moveEnemy();
             movePlayer("up");
             setPlayerImage();
             setEnemyImage();
             setItemImage();
-        }});
+        }}});
         $("#right").click(function(){
+          if(closeToCombat()){battleProcess();}else{
           if(mapSource[player_position_y][player_position_x+1] !== 1){
           setMapImage();
           moveEnemy();
@@ -170,8 +186,9 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
           setPlayerImage();
           setEnemyImage();
           setItemImage();
-        }});
+        }}});
         $("#down").click(function(){
+          if(closeToCombat()){battleProcess();}else{
           if(mapSource[player_position_y+1][player_position_x] !== 1){
             setMapImage();
             moveEnemy();
@@ -179,7 +196,7 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
             setPlayerImage();
             setEnemyImage();
             setItemImage();
-        }});
+        }}});
         //onLoad
         generateMapTable();
         setMapImage();
