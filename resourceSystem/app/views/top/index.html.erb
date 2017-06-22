@@ -17,34 +17,35 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
                          [1,0,0,1,1, 0,0,0,1,1, 0,0,0,0,1, 1,1],
                          [1,0,0,1,1, 0,0,0,1,1, 0,0,0,0,0, 1,1],
                          [1,0,0,0,0, 0,0,0,1,1, 0,0,0,0,0, 0,1],
-                         [1,0,0,0,0, 0,0,0,1,1, 0,0,0,0,0, 0,1],
+                         [1,0,0,0,0, 0,0,0,1,1, 0,0,2,0,0, 0,1],
 
                          [1,0,0,0,0, 0,0,0,0,0, 0,0,1,0,0, 0,1],
                          [1,0,0,0,0, 0,0,0,0,0, 0,0,1,0,0, 0,1],
-                         [1,0,0,0,0, 0,0,0,0,0, 0,0,1,0,0, 0,0],
+                         [1,0,0,0,0, 0,0,2,0,0, 0,0,1,0,0, 0,4],
                          [1,0,0,0,0, 0,0,0,0,0, 0,0,1,0,0, 0,1],
                          [1,0,0,0,0, 0,0,0,0,0, 0,0,1,1,1, 1,1],
 
                          [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
                          [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
                          [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
-                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
+                         [1,0,2,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
                          [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
 
                          [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
                          [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1]];
+                         var itemgetcount = 0;
                          var imagePath = "img/";
                          var player_position_x = 8;
                          var player_position_y = 6;
+
                          var enemy_position_x = [2,15];
                          var enemy_position_y = [2,15];
-                         var item_positon_x = 8;
-                         var item_positon_y = 7;
+
                          var imageSize = "30px";
-                         var maxHp = "30";
-                         var nowHp = "30";
-                         var atack = "3";
-                         var defence = "1";
+                         var maxHp = 30;
+                         var nowHp = 30;
+                         var atack = 3;
+                         var defence = 1;
 
     function generateMapTable(){
       $("#content").append("<table>");
@@ -67,6 +68,11 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
             $(`#map${j}_${i}`).css("background-image","url('<%= asset_path 'brick.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
           }else if(mapSource[j][i] === 1){
             $(`#map${j}_${i}`).css("background-image","url('<%= asset_path 'block.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+          }else if(mapSource[j][i] === 2){
+            $(`#map${j}_${i}`).css("background-image","url('<%= asset_path 'ItemBox.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+          }else if(mapSource[j][i] === 3){
+          }else if(mapSource[j][i] === 4){
+            $(`#map${j}_${i}`).css("background-image","url('<%= asset_path 'exit.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
           }
         }
       }
@@ -80,9 +86,9 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
       $(`#map${enemy_position_y[i]}_${enemy_position_x[i]}`).css("background-image","url('<%= asset_path 'srime.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
       }
     }
-    function setItemImage(){
-      $(`#map${item_positon_y}_${item_positon_x}`).css("background-image","url('<%= asset_path 'ItemBox.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
-    }
+    // function setItemImage(){
+    //   $(`#map${item_positon_y}_${item_positon_x}`).css("background-image","url('<%= asset_path 'ItemBox.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+    // }
 
 
     function movePlayer(input){
@@ -142,9 +148,10 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
     }
   }
     function renderText(){
-      $("#HP").append(`HP:${nowHp}/${maxHp}`);
-      $("#ATK").append(`ATK:${atack}`);
-      $("#DEF").append(`DEF:${defence}`);
+      $("#HP").text(`HP:${nowHp}/${maxHp}`);
+      $("#ATK").text(`ATK:${atack}`);
+      $("#DEF").text(`DEF:${defence}`);
+      $("#itemgetcount").text(`入手した宝箱の数:${itemgetcount}`);
     }
     function battleProcess(){
       alert("combat!");
@@ -156,58 +163,90 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
         }
       }
     }
-      $(function(){
-        $("#left").click(function(){
-          if(closeToCombat()){battleProcess();}else{
+    $(function(){
+      $("#left").click(function(){
+        if(closeToCombat()){
+          battleProcess();
+        }else{
           if(mapSource[player_position_y][player_position_x-1] !== 1){
             setMapImage();
             moveEnemy();
             movePlayer("left");
             setPlayerImage();
             setEnemyImage();
-            setItemImage();
-        }}});
-        $("#up").click(function(){
-          if(closeToCombat()){battleProcess();}else{
-            if(mapSource[player_position_y-1][player_position_x] !== 1){
+          }
+        }
+        if (mapSource[player_position_y][player_position_x] === 2) {
+          $("#Text").append(`アイテムを取得しました。<br>`);
+          mapSource[player_position_y][player_position_x] = 0;
+          itemgetcount++;
+          renderText();
+        }
+      });
+
+      $("#up").click(function(){
+        if(closeToCombat()){battleProcess();}else{
+          if(mapSource[player_position_y-1][player_position_x] !== 1){
             setMapImage();
             moveEnemy();
             movePlayer("up");
             setPlayerImage();
             setEnemyImage();
-            setItemImage();
-        }}});
-        $("#right").click(function(){
-          if(closeToCombat()){battleProcess();}else{
+          }
+        }
+        if (mapSource[player_position_y][player_position_x] === 2) {
+          $("#Text").append(`アイテムを取得しました。<br>`);
+          mapSource[player_position_y][player_position_x] = 0;
+          itemgetcount++;
+          renderText();
+        }
+      });
+
+      $("#right").click(function(){
+        if(closeToCombat()){battleProcess();}else{
           if(mapSource[player_position_y][player_position_x+1] !== 1){
-          setMapImage();
-          moveEnemy();
-          movePlayer("right");
-          setPlayerImage();
-          setEnemyImage();
-          setItemImage();
-        }}});
-        $("#down").click(function(){
-          if(closeToCombat()){battleProcess();}else{
+            setMapImage();
+            moveEnemy();
+            movePlayer("right");
+            setPlayerImage();
+            setEnemyImage();
+          }
+        }
+        if (mapSource[player_position_y][player_position_x] === 2) {
+          $("#Text").append(`アイテムを取得しました。<br>`);
+          mapSource[player_position_y][player_position_x] = 0;
+          itemgetcount++;
+          renderText();
+        }
+      });
+
+      $("#down").click(function(){
+        if(closeToCombat()){battleProcess();}else{
           if(mapSource[player_position_y+1][player_position_x] !== 1){
             setMapImage();
             moveEnemy();
             movePlayer("down");
             setPlayerImage();
             setEnemyImage();
-            setItemImage();
-        }}});
-        //onLoad
-        generateMapTable();
-        setMapImage();
-        setPlayerImage();
-        setEnemyImage();
-        setItemImage();
-        renderText();
-
-
-
+          }
+        }
+        if (mapSource[player_position_y][player_position_x] === 2) {
+          $("#Text").append(`アイテムを取得しました。<br>`);
+          mapSource[player_position_y][player_position_x] = 0;
+          itemgetcount++;
+          renderText();
+        }
       });
+      //onLoad
+      generateMapTable();
+      setMapImage();
+      setPlayerImage();
+      setEnemyImage();
+      renderText();
+
+
+
+    });
 
     </script>
     <title></title>
@@ -229,6 +268,8 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
       <div class="ATK" id="ATK">
       </div>
       <div class="DEF" id="DEF">
+      </div>
+      <div class="itemgetcount" id="itemgetcount">
       </div>
       <div class="Text" id="Text">
       </div>
