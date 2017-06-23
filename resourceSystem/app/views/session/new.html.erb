@@ -4,12 +4,28 @@
 
 <% if @error %>
    <%= @error %><br />
-   <% end %>
-<%= form_tag session_url do %>
-  <%= label :name, 'name:' %>
-  <%= text_field_tag :name, @name %><br />
-  <%= label :password, 'password:' %>
-  <%= text_field_tag :password, "" %><br />
-  <%= submit_tag "login" %><br />
 <% end %>
-<%= link_to "sign_in", new_user_url %>
+<div class="text-center">
+  <%= form_tag session_url do %>
+  <div class="div_form">
+    <%= label :name, 'name:' %>
+    <%= text_field_tag :name, @name %><br />
+  </div>
+    <div class="div_form">
+      <%= label :password, 'password:' %>
+      <%= text_field_tag :password, "" %><br />
+    </div>
+    <div class="div_button">
+      <%= submit_tag "ログイン" ,class: "btn btn-default"%><br />
+    </div>
+  <% end %>
+  <div class="div_button">
+    <%= link_to "新規ユーザー登録", new_user_url ,class: "btn btn-default"%>
+  </div>
+</div>
+
+
+<ul>
+  <i class="glyphicon glyphicon-pencil"><li>area</li></i>
+  <li>ss</li>
+</ul>
