@@ -36,3 +36,10 @@ body{
 .head{
   font-size: 15px;
 }
+
+.div_form{
+  padding: 30px;
+}
+.div_button{
+  padding: 10px;
+}
