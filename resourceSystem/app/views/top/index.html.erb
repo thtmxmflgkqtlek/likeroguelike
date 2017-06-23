@@ -35,10 +35,10 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
                          [1,0,0,0,0, 0,0,0,1,1, 0,0,0,0,0, 0,1],
                          [1,0,0,0,0, 0,0,0,1,1, 0,0,2,0,0, 0,1],
 
+                         [1,0,0,0,0, 0,0,5,0,0, 0,0,1,0,0, 2,1],
                          [1,0,0,0,0, 0,0,0,0,0, 0,0,1,0,0, 0,1],
-                         [1,0,0,0,0, 0,0,0,0,0, 0,0,1,0,0, 0,1],
-                         [1,0,0,0,0, 0,0,2,0,0, 0,0,1,0,0, 0,4],
-                         [1,0,0,0,0, 0,0,0,0,0, 0,0,1,0,0, 0,1],
+                         [1,0,0,0,0, 0,5,2,5,0, 0,0,1,0,0, 0,4],
+                         [1,0,0,0,0, 0,0,5,0,0, 0,0,1,0,0, 0,1],
                          [1,0,0,0,0, 0,0,0,0,0, 0,0,1,1,1, 1,1],
 
                          [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
@@ -83,6 +83,8 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
           }else if(mapSource[j][i] === 3){
           }else if(mapSource[j][i] === 4){
             $(`#map${j}_${i}`).css("background-image","url('<%= asset_path 'exit.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+          }else if(mapSource[j][i] === 5){
+            $(`#map${j}_${i}`).css("background-image","url('<%= asset_path 'plants.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
           }
         }
       }
@@ -213,9 +215,21 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
           itemGetCount++;
           renderText();
         }
-        if (mapSource[player.y][player.x] === 4) {
-          alert("次のマップにいきますか？");
+        if (mapSource[player.y][player.x] === 5) {
+          $("#Text").append(`薬草を取得しました。HPが回復します。<br>`);
+          mapSource[player.y][player.x] = 0;
+          renderText();
         }
+        if (mapSource[player_position_y][player_position_x] === 4) {
+          if (window.confirm('次のマップにいきますか？')) {
+          			//  location.href = "hoge.php";
+                $("#itemGetCount").attr("value",itemGetCount);
+                $('#form').submit();
+
+          		} else {
+          			// hogehoge
+          		}}
+
       });
 
       $("#up").click(function(){
@@ -237,9 +251,21 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
           itemGetCount++;
           renderText();
         }
-        if (mapSource[player.y][player.x] === 4) {
-          alert("asds");
+        if (mapSource[player.y][player.x] === 5) {
+          $("#Text").append(`薬草を取得しました。HPが回復します。<br>`);
+          mapSource[player.y][player.x] = 0;
+          renderText();
         }
+        if (mapSource[player_position_y][player_position_x] === 4) {
+          if (window.confirm('次のマップにいきますか？')) {
+          			//  location.href = "hoge.php";
+                $("#itemGetCount").attr("value",itemGetCount);
+                $('#form').submit();
+
+          		} else {
+          			// hogehoge
+          		}}
+
       });
 
       $("#right").click(function(){
@@ -261,6 +287,11 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
           itemGetCount++;
           renderText();
         }
+        if (mapSource[player.y][player.x] === 5) {
+          $("#Text").append(`薬草を取得しました。HPが回復します。<br>`);
+          mapSource[player.y][player.x] = 0;
+          renderText();
+        }
         if (mapSource[player.y][player.x] === 4) {
           if (window.confirm('次のマップにいきますか？')) {
           			//  location.href = "hoge.php";
@@ -270,6 +301,7 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
           		} else {
           			// hogehoge
           		}}
+
       });
 
       $("#down").click(function(){
@@ -291,9 +323,21 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
           itemGetCount++;
           renderText();
         }
-        if (mapSource[player.y][player.x] === 4) {
-          alert("asds");
+        if (mapSource[player.y][player.x] === 5) {
+          $("#Text").append(`薬草を取得しました。HPが回復します。<br>`);
+          mapSource[player.y][player.x] = 0;
+          renderText();
         }
+        if (mapSource[player_position_y][player_position_x] === 4) {
+          if (window.confirm('次のマップにいきますか？')) {
+          			//  location.href = "hoge.php";
+                $("#itemGetCount").attr("value",itemGetCount);
+                $('#form').submit();
+
+          		} else {
+          			// hogehoge
+          		}}
+
       });
       //onLoad
       generateMapTable();
@@ -327,7 +371,7 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
       </div>
       <div class="DEF" id="DEF">
       </div>
-      <form class="form"  id="form" action="http://localhost:3000/users" method="get">
+      <form class="form"  id="form" action="http://localhost:3000/weapon/index" method="get">
         <div class="itemCount" id="itemCount">
         </div>
         <input type="hidden" id="itemGetCount" name="itemGetCount" value=0>
