@@ -57,6 +57,7 @@ Rails.application.routes.draw do
 
   get 'weapon/index'
   get 'top/stage2'
+  
 
   get "mode" => "manager#modeSelect", :as => :mode
   get "dungeon" => "manager#dungeon", :as => :dungeon
