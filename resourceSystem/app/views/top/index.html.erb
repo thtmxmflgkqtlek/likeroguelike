@@ -1,16 +1,10 @@
 <script type="text/javascript">
-
 </script>
 
-<div class="text-center">
-  <h1>資材管理システムへようこそ！</h1>
-  <p>ユーザーログインと資材を予約してください！</p>
-
+<!--
   <%= link_to "ユーザー確認へ",users_path ,class: 'btn btn-default'%><br>
   <%= link_to "資材一覧へ",:rentals ,class: 'btn btn-default'%>
-</div>
-
-
+-->
 
 <script >
 function Unit(name,maxHp,hp,atk,def,x,y){
@@ -29,6 +23,7 @@ function Unit(name,maxHp,hp,atk,def,x,y){
     return damage - this.def;
   }
 }
+
 var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
                          [1,0,0,1,1, 0,0,0,1,1, 0,0,0,0,1, 1,1],
                          [1,0,0,1,1, 0,0,0,1,1, 0,0,0,0,0, 1,1],
@@ -56,7 +51,6 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
 
                          var imageSize = "30px";
 
-
     function generateMapTable(){
       $("#content").append("<table>");
       for(var i=0; i<mapSource.length; i++){
@@ -67,7 +61,6 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
         $("#content").append("</tr>");
       }
       $("#content").append("</table>");
-
     }
 
     function setMapImage(){
@@ -85,10 +78,10 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
             $(`#map${j}_${i}`).css("background-image","url('<%= asset_path 'exit.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
           }else if(mapSource[j][i] === 5){
             $(`#map${j}_${i}`).css("background-image","url('<%= asset_path 'plants.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
-          }
         }
       }
     }
+  }
 
     function setPlayerImage(){
       $(`#map${player.y}_${player.x}`).css("background-image","url('<%= asset_path 'mario.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
@@ -116,6 +109,7 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
         player.y++;
       }
     }
+
     function moveEnemy(){
       for(var i=0; i<enemys.length; i++){
       if(Math.abs(enemys[i].x-player.x) > Math.abs(enemys[i].y-player.y)){
@@ -159,12 +153,14 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
       }
     }
   }
+
     function renderText(){
       $("#HP").text(`HP:${player.hp}/${player.maxHp}`);
       $("#ATK").text(`ATK:${player.atk}`);
       $("#DEF").text(`DEF:${player.def}`);
       $("#itemGetCount").text(`入手した宝箱の数:${itemGetCount}`);
     }
+
     function battleProcess(){
       for(var i=0; enemys.length; i++){
         if(Math.abs(player.x-enemys[i].x) <= 1 && Math.abs(player.y-enemys[i].y) === 0
@@ -186,6 +182,7 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
          }
       }
     }
+
     function closeToCombat(){
       for(var i=0; i<enemys.length; i++){
         if(Math.abs(player.x-enemys[i].x) <= 1 && Math.abs(player.y-enemys[i].y) === 0
@@ -195,6 +192,7 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
         }
       }
     }
+
     $(function(){
       $("#left").click(function(){
         if(isOnBattle){
@@ -215,21 +213,21 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
           itemGetCount++;
           renderText();
         }
-        if (mapSource[player.y][player.x] === 5) {
-          $("#Text").append(`薬草を取得しました。HPが回復します。<br>`);
-          mapSource[player.y][player.x] = 0;
-          renderText();
-        }
         if (mapSource[player_position_y][player_position_x] === 4) {
-          if (window.confirm('次のマップにいきますか？')) {
-          			//  location.href = "hoge.php";
-                $("#itemGetCount").attr("value",itemGetCount);
-                $('#form').submit();
-
-          		} else {
-          			// hogehoge
-          		}}
-
+          if (mapSource[player.y][player.x] === 5) {
+            $("#Text").append(`薬草を取得しました。HPが回復します。<br>`);
+            mapSource[player.y][player.x] = 0;
+            renderText();
+          }
+          if (mapSource[player_position_y][player_position_x] === 4) {
+            if (window.confirm('次のマップにいきますか？')) {
+            			//  location.href = "hoge.php";
+                  $("#itemGetCount").attr("value",itemGetCount);
+                  $('#form').submit();
+                } else {
+            			// hogehoge
+            		}
+              }
       });
 
       $("#up").click(function(){
@@ -265,7 +263,6 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
           		} else {
           			// hogehoge
           		}}
-
       });
 
       $("#right").click(function(){
@@ -301,7 +298,6 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
           		} else {
           			// hogehoge
           		}}
-
       });
 
       $("#down").click(function(){
@@ -337,7 +333,6 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
           		} else {
           			// hogehoge
           		}}
-
       });
       //onLoad
       generateMapTable();
@@ -345,18 +340,26 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
       setPlayerImage();
       setEnemyImage();
       renderText();
-
-
-
     });
+  });
 
     </script>
-    <title></title>
+
+    <title>メイン画面</title>
   </head>
+
   <body>
+    <table>
+      <tr>
+        <td>
     <div class="content" id="content">
 
     </div>
+
+        </td>
+      </tr>
+      <tr>
+        <td>
     <div class="ui" id=ui>
       <button type="button" name="button" id=left>←</button>
       <button type="button" name="button" id=up>↑</button>
@@ -371,7 +374,7 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
       </div>
       <div class="DEF" id="DEF">
       </div>
-      <form class="form"  id="form" action="http://localhost:3000/weapon/index" method="get">
+      <form class="form" id="form" action="weapon/index" method="get">
         <div class="itemCount" id="itemCount">
         </div>
         <input type="hidden" id="itemGetCount" name="itemGetCount" value=0>
@@ -379,3 +382,6 @@ var mapSource = [        [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
       <div class="Text" id="Text">
       </div>
     </div>
+    </td>
+  </tr>
+</table>

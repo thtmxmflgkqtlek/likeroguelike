@@ -11,9 +11,9 @@ class SessionController < ApplicationController
       session[:user_id] = @user.id
       flash[:notice] = "ログインに成功しました"
       if @user.adm?
-        redirect_to users_path
+        redirect_to :root
       else
-       redirect_to user_path(@user)
+       redirect_to :root
       end
     else
       @error = "ログインに失敗しました"

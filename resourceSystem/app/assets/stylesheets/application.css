@@ -17,7 +17,7 @@
 @import "bootstrap";
 
 body{
-  background-color: rgb(175, 188, 246)
+  background-color: #fff;
 }
 
 #username{
@@ -37,9 +37,18 @@ body{
   font-size: 15px;
 }
 
+table{
+  margin: auto;
+}
+
+.center{
+  text-align: center;
+}
+
 .div_form{
   padding: 30px;
 }
+
 .div_button{
   padding: 10px;
 }

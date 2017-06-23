@@ -54,10 +54,19 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+
   get 'weapon/index'
   get 'top/stage2'
+
+  get "mode" => "manager#modeSelect", :as => :mode
+  get "dungeon" => "manager#dungeon", :as => :dungeon
+  get "matching" => "manager#matching", :as => :matching
+  get "battle" => "manager#battle", :as => :battle
+
   post 'weapon/index' => 'weapon#index'
-  root:to => "top#index"
+
+  root:to => "manager#modeSelect"
+
   match 'logout' => "session#destroy" ,via: :all
   match 'login' => "session#new" , via: :all
   resource :session, :only => [:create], :controller => 'session'
