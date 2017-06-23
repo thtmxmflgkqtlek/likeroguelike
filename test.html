@@ -1,107 +1,54 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <script src="js/jquery-3.2.1.min.js">
+<head>
+  <meta charset="utf-8">
+  <script src="js/jquery-3.2.1.min.js">
 
-    </script>
-    <script type="text/javascript">
-        var mapSource = [[1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1],
-                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
-                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
-                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
-                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
+  </script>
+  <script type="text/javascript">
+  function Player(hp,atk,def){
+    this.hp=hp;    this.atk=atk;    this.def=def;
 
-                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
-                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
-                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
-                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
-                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
 
-                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
-                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
-                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
-                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
-                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
+    this.setStatus = function(hp,atk,def){
+      this.hp=hp;      this.atk=atk;      this.def=def;
+    }
+    this.getStatus = function(){
+      return this.hp+" / "+this.atk+" / "+this.def;
+    }
+    this.attacked = function(damage){
+      this.hp -= damage - this.def;
+    }
+  }
 
-                         [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1],
-                         [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1]];
-                         var imagePath = "img/";
-                         var player_position_x = 8;
-                         var player_position_y = 6;
-                         var imageSize = "30px";
+  $(function(){
 
-    function generateMapTable(){
-      $("#content").append("<table>");
-      for(var i=0; i<mapSource.length; i++){
-        $("#content").append("<tr>");
-        for(var j=0; j<mapSource.length; j++){
-          $("#content").append("<td class='mapBlock' id='map"+i+"_"+j+"'></td>");
-        }
-        $("#content").append("</tr>");
-      }
-      $("#content").append("</table>");
+    var p = new Player(30,10,5);
+    var e = new Player(20,8,3);
+    var enemys = [new Player(20,8,3),new Player(10,8,3)];
+    for(var i=0; i < enemys.length; i++){
+      $("#content").append( enemys[i].hp);
 
     }
-
-    function setMapImage(){
-      var imagePath = "img/";
-      for(var i=0; i<mapSource.length; i++){
-        for(var j=0; j<mapSource.length; j++){
-          if(mapSource[i][j] === 0){
-            $("#map"+j+"_"+i).css("background-image","url('"+imagePath+"brick.png')").css("width",imageSize).css("height",imageSize).css("background-position","center");
-          }else if(mapSource[i][j] === 1){
-            $("#map"+j+"_"+i).css("background-image","url('"+imagePath+"block.gif')").css("width",imageSize).css("height",imageSize).css("background-position","center");
-          }
-        }
-      }
-    }
-
-    function setPlayerImage(){
-      setMapImage();
-      $("#map"+player_position_y+"_"+player_position_x).css("background-image","url('"+imagePath+"player.png')").css("width",imageSize).css("height",imageSize).css("background-position","center");
-    }
-    function movePlayer(input){
-      if(input === "left"){
-        player_position_x--;
-        setPlayerImage();
-      }else if(input === "up"){
-        player_position_y--;
-        setPlayerImage();
-      }
-      else if(input === "right"){
-        player_position_x++;
-        setPlayerImage();
-      }
-      else if(input === "down"){
-        player_position_y++;
-        setPlayerImage();
-      }
-    }
-      $(function(){
-        $("#left").click(function(){movePlayer("left");});
-        $("#up").click(function(){movePlayer("up");});
-        $("#right").click(function(){movePlayer("right");});
-        $("#down").click(function(){movePlayer("down");});
-          generateMapTable();
-          setMapImage();
-          setPlayerImage();
+    // p.attacked(e.atk);
+    // alert(p.atk);
+    // $("#content").append( p.getStatus());
 
 
-      });
+  });
 
-    </script>
-    <title></title>
-  </head>
-  <body>
-    <div class="content" id="content">
+  </script>
+  <title></title>
+</head>
+<body>
+  <div class="content" id="content">
 
-    </div>
-    <div class="ui" id=ui>
-      <button type="button" name="button" id=left>L</button>
-      <button type="button" name="button" id=up>U</button>
-      <button type="button" name="button" id=right>R</button>
-      <button type="button" name="button" id=down>D</button>
-    </div>
-  </body>
+  </div>
+  <div class="ui" id=ui>
+    <button type="button" name="button" id=left>L</button>
+    <button type="button" name="button" id=up>U</button>
+    <button type="button" name="button" id=right>R</button>
+    <button type="button" name="button" id=down>D</button>
+  </div>
+</body>
 </html>
