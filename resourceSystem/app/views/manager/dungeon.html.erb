@@ -1,0 +1,352 @@
+
+    <script type="text/javascript"></script>
+
+
+
+    <script>
+    function Unit(name,maxHp,hp,atk,def,x,y,sight,image){
+      this.name = name;   this.maxHp = maxHp;   this.hp=hp;
+      this.atk=atk;    this.def=def;
+      this.x=x;      this.y=y;    this.sight=sight;   this.image=image;
+
+      this.attacked = function(damage){
+        this.hp -= damage - this.def;
+        return damage - this.def;
+      }
+    }
+
+    var mapSource = [
+    [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1],
+    [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 0,0,0,0,0, 0,0,0,0,1],
+    [1,0,0,1,1, 1,0,0,0,1, 1,1,0,0,1, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 0,0,0,0,0, 0,0,0,0,1],
+    [1,0,0,0,0, 1,0,0,0,1, 0,0,0,0,1, 0,0,1,1,1, 1,1,0,0,0, 0,0,0,0,1, 0,0,0,0,0, 1,1,1,1,1],
+    [1,0,0,0,0, 1,1,1,1,1, 0,0,0,0,0, 0,0,0,0,0, 0,1,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1],
+
+    [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 0,0,1,0,0, 0,1,0,1,0, 0,1,0,0,1, 0,0,0,0,0, 1,0,0,0,1],
+    [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 0,0,1,0,0, 0,1,0,1,0, 0,1,0,0,1, 0,0,0,0,0, 1,0,0,0,1],
+    [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 0,0,1,0,0, 0,1,5,1,0, 0,1,0,0,1, 0,0,0,0,0, 1,0,0,0,1],
+    [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 0,0,1,0,0, 0,1,1,1,0, 0,1,0,0,1, 0,0,0,0,0, 1,0,0,0,1],
+    [1,0,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 0,0,1,0,0, 0,0,0,0,0, 0,1,0,0,1, 1,1,1,1,1, 1,0,0,0,1],
+
+    [1,0,1,0,0, 0,0,0,0,0, 0,0,0,0,1, 0,0,1,0,0, 0,0,0,0,0, 0,1,0,0,0, 0,0,0,0,0, 0,0,0,0,1],
+    [1,0,1,0,0, 5,0,0,0,0, 0,0,0,0,1, 0,0,1,0,0, 0,0,0,0,0, 0,1,0,0,0, 0,0,0,0,0, 0,0,0,0,1],
+    [1,0,1,1,1, 1,1,1,1,1, 1,1,0,0,1, 0,0,1,1,1, 1,1,1,1,1, 1,1,0,0,0, 0,0,0,0,0, 0,0,0,0,1],
+    [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 1,1,1,1,1, 1,1,1,1,1],
+    [1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 0,0,0,0,0, 0,0,0,2,1],
+
+    [1,0,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,0,0,0,1, 1,1,1,0,0, 1,1,0,0,1, 0,0,1,1,0, 1,1,1,1,1],
+    [1,0,0,0,0, 0,0,0,0,1, 0,0,0,0,0, 1,0,0,0,1, 0,0,0,0,0, 0,1,0,0,1, 0,0,1,0,0, 0,0,0,0,1],
+    [1,0,0,0,0, 0,0,0,0,1, 0,0,2,0,0, 1,0,0,0,1, 0,0,0,0,0, 0,1,0,0,1, 0,0,1,0,0, 0,0,0,0,1],
+    [1,0,0,0,0, 0,0,0,0,1, 0,0,0,0,0, 0,0,0,0,1, 0,0,0,0,0, 0,1,0,0,0, 0,0,1,0,0, 0,0,0,4,1],
+    [1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1, 1,1,1,1,1]]
+
+    var isOnBattle = false;
+    var itemGetCount = 0;
+    var player = new Unit("YOU",30,30,5,1,7,2,4,"<%= asset_path 'mario.gif'%>");
+    var enemys = [new Unit("slime",6,6,3,3,11,6,8,"<%= asset_path 'srime.gif'%>"),
+                  new Unit("slime",6,6,3,3,19,7,8,"<%= asset_path 'srime.gif'%>"),
+                  new Unit("slime",6,6,3,3,33,11,8,"<%= asset_path 'srime.gif'%>"),
+                  new Unit("slime",6,6,3,3,4,17,8,"<%= asset_path 'srime.gif'%>"),
+                  new Unit("slime",6,6,3,3,16,14,8,"<%= asset_path 'srime.gif'%>"),
+                  new Unit("slime",6,6,3,3,30,14,8,"<%= asset_path 'srime.gif'%>"),
+                  new Unit("mimic",10,10,5,1,21,17,4,"<%= asset_path 'ItemBox.gif'%>"),
+                  new Unit("mimic",10,10,5,1,32,7,4,"<%= asset_path 'ItemBox.gif'%>")];
+    var imageSize = "30px";
+
+
+    function generateMapTable(){
+      $("#content").append("<table>");
+      for(var i=0; i<mapSource.length; i++){
+        $("#content").append("<tr>");
+        for(var j=0; j<mapSource[0].length; j++){
+          $("#content").append("<td class='mapBlock' id='map"+i+"_"+j+"'></td>");
+        }
+        $("#content").append("</tr>");
+      }
+      $("#content").append("</table>");
+    }
+
+    function setMapImage(){
+      for(var i=0; i<mapSource[0].length; i++){
+        for(var j=0; j<mapSource.length; j++){
+          if(mapSource[j][i] === 0){
+            $(`#map${j}_${i}`).css("background-image","url('<%= asset_path 'brick.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+          }else if(mapSource[j][i] === 1){
+            $(`#map${j}_${i}`).css("background-image","url('<%= asset_path 'block.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+          }else if(mapSource[j][i] === 2){
+            $(`#map${j}_${i}`).css("background-image","url('<%= asset_path 'ItemBox.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+          }else if(mapSource[j][i] === 3){
+          }else if(mapSource[j][i] === 4){
+            $(`#map${j}_${i}`).css("background-image","url('<%= asset_path 'exit.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+          }else if(mapSource[j][i] === 5){
+            $(`#map${j}_${i}`).css("background-image","url('<%= asset_path 'plants.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+          }else if(mapSource[j][i] >= 10){
+            $(`#map${j}_${i}`).css("background-image","url('<%= asset_path 'gray.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+          }
+        }
+      }
+    }
+    function sightProcess(){
+
+      for(var i=0; i<mapSource[0].length; i++){
+        for(var j=0; j<mapSource.length; j++){
+
+          if(Math.abs(player.x-i)+Math.abs(player.y-j) > player.sight){ // inside of sight
+            if(mapSource[j][i] < 10){
+              mapSource[j][i] += 10;
+            }
+          }else{ //outside of sight
+            if(mapSource[j][i] >= 10){
+              mapSource[j][i] -= 10;
+            }
+          }
+        }
+      }
+    }
+
+    function setPlayerImage(){
+      $(`#map${player.y}_${player.x}`).css("background-image",`url('${player.image}')`).css("width",imageSize).css("height",imageSize).css("background-position","center");
+    }
+    function setEnemyImage(){
+      for(var i=0; i<enemys.length; i++){
+
+        // if(Math.abs(player.x-enemys[i].x)+Math.abs(player.y-enemys[i].y) < player.sight){
+          $(`#map${enemys[i].y}_${enemys[i].x}`).css("background-image",`url('${enemys[i].image}')`).css("width",imageSize).css("height",imageSize).css("background-position","center");
+        // }
+      }
+    }
+
+    function movePlayer(input){
+      if(input === "left"){
+        player.x--;
+      }else if(input === "up"){
+        player.y--;
+      }
+      else if(input === "right"){
+        player.x++;
+      }
+      else if(input === "down"){
+        player.y++;
+      }
+    }
+    function moveEnemy(){
+      for(var i=0; i<enemys.length; i++){
+        if(Math.abs(player.x-enemys[i].x)+Math.abs(player.y-enemys[i].y) < enemys[i].sight){ //inside of sight of enemy
+          if(Math.abs(enemys[i].x-player.x) > Math.abs(enemys[i].y-player.y)){
+            if (enemys[i].x > player.x) {
+              if(mapSource[enemys[i].y][enemys[i].x-1] %10 !== 1){
+                enemys[i].x--;
+              }else if(mapSource[enemys[i].y+1][enemys[i].x] %10 !== 1){
+                enemys[i].y++;
+              }else if(mapSource[enemys[i].y-1][enemys[i].x] %10 !== 1){
+                enemys[i].y--;
+              }
+
+            }else if (enemys[i].x < player.x) {
+              if(mapSource[enemys[i].y][enemys[i].x+1] %10 !== 1){
+                enemys[i].x++;
+              }else if(mapSource[enemys[i].y+1][enemys[i].x] %10 !== 1){
+                enemys[i].y++;
+              }else if(mapSource[enemys[i].y-1][enemys[i].x] %10 !== 1){
+                enemys[i].y--;
+              }
+            }
+          }else{
+            if (enemys[i].y > player.y) {
+              if(mapSource[enemys[i].y-1][enemys[i].x] %10 !== 1){
+                enemys[i].y--;
+              }else if(mapSource[enemys[i].y][enemys[i].x+1] %10 !== 1){
+                enemys[i].x++;
+              }else if(mapSource[enemys[i].y][enemys[i].x-1] %10 !== 1){
+                enemys[i].x--;
+              }
+
+            }else if (enemys[i].y < player.y) {
+              if(mapSource[enemys[i].y+1][enemys[i].x] %10 !== 1){
+                enemys[i].y++;
+              }else if(mapSource[enemys[i].y][enemys[i].x+1] %10 !== 1){
+                enemys[i].x++;
+              }else if(mapSource[enemys[i].y][enemys[i].x-1] %10 !== 1){
+                enemys[i].x--;
+              }
+            }
+          }
+        }
+      }
+    }
+    function renderText(){
+      $("#Lv").text(`lv:`);
+      $("#HP").text(`HP:${player.hp}/${player.maxHp}`);
+      $("#ATK").text(`ATK:${player.atk}`);
+      $("#DEF").text(`DEF:${player.def}`);
+      $("#equipment").text(`現在の装備:なし`);
+      $("#itemGetCount").text(`入手した宝箱の数:${itemGetCount}`);
+    }
+    function battleProcess(){
+      for(var i=0; enemys.length; i++){
+        if(Math.abs(player.x-enemys[i].x) <= 1 && Math.abs(player.y-enemys[i].y) === 0
+         || Math.abs(player.x-enemys[i].x) === 0 && Math.abs(player.y-enemys[i].y) <= 1){
+           $("#Text_combat").append(`${player.name}'の攻撃! ${enemys[i].name}は${enemys[i].attacked(player.atk)}のダメージ \n`);
+           $("#Text_combat").scrollTop( $("#Text_combat")[0].scrollHeight );
+           if(enemys[i].hp <= 0){ //killed mob
+             $("#Text_combat").append(`${enemys[i].name}は死んだ！\n`);
+             $("#Text_combat").scrollTop( $("#Text_combat")[0].scrollHeight );
+             $(`#map${enemys[i].y}_${enemys[i].x}`).css("background-image","url('<%= asset_path 'srime_dead.gif'%>')").css("width",imageSize).css("height",imageSize).css("background-position","center");
+             enemys.splice(i,1);  //delete enemys[i]
+             isOnBattle = false;
+           }else{
+             $("#Text_combat").append(`${enemys[i].name}の攻撃！${player.name}は${player.attacked(enemys[i].atk)}のダメージ！\n`);
+             $("#Text_combat").scrollTop( $("#Text_combat")[0].scrollHeight );
+             renderText();
+             if(player.hp <= 0){  //gameover!
+               $("#Text_combat").append(`${player.name}は死んだ！\n`);
+               $("#Text_combat").scrollTop( $("#Text_combat")[0].scrollHeight );
+             }
+           }
+        }
+      }
+    }
+    function closeToCombat(){
+      for(var i=0; i<enemys.length; i++){
+        if(Math.abs(player.x-enemys[i].x) <= 1 && Math.abs(player.y-enemys[i].y) === 0
+        || Math.abs(player.x-enemys[i].x) === 0 && Math.abs(player.y-enemys[i].y) <= 1){
+          alert("!");
+          isOnBattle = true;
+        }
+      }
+    }
+    function moveKeyProcess(key){
+      if(isOnBattle){
+        battleProcess();
+      }else{
+        if(key=="left"){
+          if(mapSource[player.y][player.x-1] %10 !== 1){
+            moveEnemy();
+            movePlayer(key);
+          }
+        }else if(key=="up"){
+          if(mapSource[player.y-1][player.x] %10 !== 1){
+            moveEnemy();
+            movePlayer(key);
+          }
+        }else if(key=="right"){
+          if(mapSource[player.y][player.x+1] %10 !== 1){
+            moveEnemy();
+            movePlayer(key);
+          }
+        }else if(key=="down"){
+          if(mapSource[player.y+1][player.x] %10 !== 1){
+            moveEnemy();
+            movePlayer(key);
+          }
+        }
+        sightProcess();
+        setMapImage();
+        setPlayerImage();
+        setEnemyImage();
+        closeToCombat();
+      }
+
+      if (mapSource[player.y][player.x] === 2) {
+        $("#Text_system").append(`アイテムを取得しました。\n`);
+        $("#Text_system").scrollTop( $("#Text_system")[0].scrollHeight );
+        mapSource[player.y][player.x] = 0;
+        itemGetCount++;
+        renderText();
+      }
+      if (mapSource[player.y][player.x] === 5) {
+        var heal = Math.round(player.maxHp / 3);
+        var healed = 0;
+        for(var i=1; i<heal; i++){
+          if(player.hp<player.maxHp){
+            player.hp++;
+            healed++;
+          }
+        }
+
+        $("#Text_system").append(`薬草を取得しました。HPが${healed}点回復します。\n`);
+        $("#Text_system").scrollTop( $("#Text_system")[0].scrollHeight );
+        mapSource[player.y][player.x] = 0;
+        renderText();
+      }
+      if (mapSource[player.y][player.x] === 4) {
+        if (window.confirm('次のマップにいきますか？')) {
+          //  location.href = "hoge.php";
+          $("#itemGetCount").attr("value",itemGetCount);
+          $('#form').submit();
+
+        } else {
+          // hogehoge
+        }}
+    }
+
+    ///
+    $(function(){
+      $("#left").click(function(){
+        moveKeyProcess("left");
+        });
+        $("#up").click(function(){
+          moveKeyProcess("up");
+          });
+          $("#right").click(function(){
+            moveKeyProcess("right");
+            });
+            $("#down").click(function(){
+              moveKeyProcess("down");
+              });
+
+        //onLoad
+        generateMapTable();
+        //sightProcess();
+
+        setMapImage();
+        setPlayerImage();
+        setEnemyImage();
+        renderText();
+
+          });
+
+          </script>
+          <title></title>
+        </head>
+        <body>
+          <div class="text-center">
+            <h1>Stage1</h1>
+            <%= link_to "ユーザー確認へ",users_path ,class: 'btn btn-default'%><br>
+            <%= link_to "資材一覧へ",:rentals ,class: 'btn btn-default'%>
+          </div>
+          <div class="content" id="content">
+          </div>
+          <div class="text-center">
+            <button type="button" class="moveKey" name="leftKey" id=left>←</button>
+            <button type="button" class="moveKey" name="upKey" id=up>↑</button>
+            <button type="button" class="moveKey" name="rightKey" id=right>→</button>
+            <button type="button" class="moveKey" name="downKey" id=down>↓</button>
+          </div>
+
+          <div class="text-center">
+            <strong>システムテキスト</strong>
+            <textarea class="Text_system" id="Text_system" name="name" rows="4" cols="30" style="overflow:auto;"></textarea>
+            <strong>戦闘テキスト</strong>
+            <textarea class="Text_combat" id="Text_combat" name="name" rows="4" cols="30" style="overflow:auto;"></textarea>
+          </div>
+          <div class="text-center">
+            <!-- <div class="Lv" id="Lv">
+            </div> -->
+            <div class="HP" id="HP">
+            </div>
+            <div class="ATK" id="ATK">
+            </div>
+            <div class="DEF" id="DEF">
+            </div>
+            <div class="equipment" id="equipment">
+            </div>
+            <form class="form"  id="form" action="http://localhost:3000/weapon/index" method="get">
+              <div class="itemCount" id="itemCount">
+              </div>
+              <input type="hidden" id="itemGetCount" name="itemGetCount" value=0>
+            </form>
+          <div class="Text" id="Text">
+            </div>
+
+          </div>
