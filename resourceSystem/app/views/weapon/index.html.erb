@@ -1,18 +1,50 @@
+<script>
+  $("#formbutton").click(function(){
+    $("#itemGetCount").attr("value",itemGetCount);
+    $('#form').submit();
+  })
+
+</script>
+
+<div class="center">
 <h1>今回の取得アイテム</h1>
 <p>装備変更をする際は下のプルタブから</p>
-<table>
+<table class="weapon-all">
+  <tr class="weapon-header">
+    <td>名前</td>
+    <td class="weapon-params">HP</td>
+    <td class="weapon-params">ATK</td>
+    <td class="weapon-params">DEF</td>
+  </tr>
+
+<% @datas.each do |data| %>
 <tr>
-  <td>名前</td>
-  <td>HP</td>
-  <td>ATK</td>
-  <td>DEF</td>
-</tr>
-  <% @datas.each do |data| %>
-<tr>
-  <td><%= data.name %></td>
-  <td><%= data.health %></td>
-  <td><%= data.attack %></td>
-  <td><%= data.defense %></td>
+  <div class="status" id="status">
+    <td class="weapon-name"><%= data.name %></td>
+    <td><%= data.health %></td>
+    <td><%= data.attack %></td>
+    <td><%= data.defense %></td>
+  </div>
 </tr>
 <% end %>
 </table>
+<form class="form"  id="form" action="http://localhost:3000/top/stage2" method="get">
+<select name="weapon">
+  <% @datas.each do |data| %>
+<option value='name!<%= data.name %>!HP!<%= data.health %>!ATK!<%= data.attack %>!DEF!<%= data.defense %>'><%= data.name %></option>
+
+<% end %>
+<input type="submit" name="" value="送信">
+</select>
+</form>
+
+<form class="form"  id="form" action="http://localhost:3000/top/stage2" method="get">
+    <input type="hidden" id="status" name="status" value=0>
+    <input type="submit" class="form" name="" value="次のマップへ">
+</form>
+<%= link_to "モードセレクト画面へ戻る", mode_path, :class => 'btn btn-default' %>
+
+<!--
+<%= link_to "次の階へ進む", dungeon_path, :class => 'btn btn-default' %>
+-->
+</div>

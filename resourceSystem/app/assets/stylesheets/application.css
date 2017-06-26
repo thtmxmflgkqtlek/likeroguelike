@@ -17,7 +17,7 @@
 @import "bootstrap";
 
 body{
-  background-color: rgb(175, 188, 246)
+  background-color: #fff;
 }
 
 #username{
@@ -37,9 +37,70 @@ body{
   font-size: 15px;
 }
 
+table{
+  margin: auto;
+}
+
+.center{
+  text-align: center;
+}
+
 .div_form{
   padding: 30px;
 }
+
 .div_button{
   padding: 10px;
 }
+
+
+/* モードセレクト画面 ここから */
+#modeSelect-container{
+  background-color: #ccc;
+  width: 90%;
+  height: 600px;
+  margin: auto;
+  background-image: url("topImage.gif");
+  background-size: cover;
+}
+
+#modeSelect-text{
+  text-align: right;
+  padding: 20px;
+}
+
+#modeSelect-button{
+  font-size: 25px;
+}
+/* ここまで */
+
+/* ステージ画面 ここから */
+.stage-UI{
+  float: left;
+  margin: 0 20px;
+}
+
+.stage-Text{
+  float: left;
+  text-align: left;
+  margin: 0 30px;
+}
+/* ここまで */
+
+/* 取得アイテム一覧画面 ここから */
+.weapon-all, .weapon-all tr, .weapon-all td{
+  border: 1px solid #000;
+}
+
+.weapon-all td{
+  padding: 0 10px;
+}
+
+.weapon-name{
+  background-color: #ddf;
+}
+
+.weapon-header{
+  background-color: #aaf;
+}
+/* ここまで */
