@@ -9,12 +9,6 @@
 <% myhp = equip_hp + 30  %>
 <% myatk = equip_atk + 10  %>
 <% mydef = equip_def + 5  %>
-    <div class="text-center">
-      <strong>システムテキスト</strong>
-      <textarea class="Text_system" id="Text_system" name="name" rows="4" cols="30" style="overflow:auto;"></textarea>
-      <strong>戦闘テキスト</strong>
-      <textarea class="Text_combat" id="Text_combat" name="name" rows="4" cols="30" style="overflow:auto;"></textarea>
-    </div>
 
     <script >
     function Unit(name,maxHp,hp,atk,def,x,y,sight,image){
@@ -416,30 +410,64 @@
           <div class="content" id="content">
 
           </div>
+
           <div class="text-center">
             <button type="button" name="button" id=left>←</button>
             <button type="button" name="button" id=up>↑</button>
             <button type="button" name="button" id=right>→</button>
             <button type="button" name="button" id=down>↓</button>
           </div>
+          <br>
 
-          <div class="text-center">
-            <div class="Lv" id="Lv">
-            </div>
-            <div class="HP" id="HP">
-            </div>
-            <div class="ATK" id="ATK">
-            </div>
-            <div class="DEF" id="DEF">
-            </div>
-            <div class="equipment" id="equipment">
-            </div>
-            <form class="form"  id="form" action="http://localhost:3000/weapon/index" method="get">
-              <div class="itemCount" id="itemCount">
-              </div>
-              <input type="hidden" id="itemGetCount" name="itemGetCount" value=0>
-            </form>
-          <div class="Text" id="Text">
-            </div>
+          <!-- UI 以下各ステージで使い回しできる -->
+          <table class="Full-map">
+            <tr>
+              <th colspan="4">
+                player name : <%= @login_user.name %>
+              </th>
+              <th>
+                システムテキスト
+              </th>
+              <th>
+                戦闘テキスト
+              </th>
+            </tr>
+            <tr>
+              <td>
+                <div class="Lv" id="Lv">
+                </div>
+              </td>
+              <td>
+                <div class="HP" id="HP">
+                </div>
+              </td>
+              <td>
+                <div class="ATK" id="ATK">
+                </div>
+              </td>
+              <td>
+                <div class="DEF" id="DEF">
+                </div>
+              </td>
+              <td rowspan="2">
+                <textarea class="Text_system" id="Text_system" name="name" rows="4" cols="30" style="overflow:auto;"></textarea>
+              </td>
+              <td rowspan="2">
+                <textarea class="Text_combat" id="Text_combat" name="name" rows="4" cols="30" style="overflow:auto;"></textarea>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="4">
+                <div class="equipment" id="equipment">
+                </div>
 
-          </div>
+                <form class="form"  id="form" action="http://localhost:3000/weapon/index" method="get">
+                  <div class="itemCount" id="itemCount">
+                  </div>
+                  <input type="hidden" id="itemGetCount" name="itemGetCount" value=0>
+                </form>
+                <div class="Text" id="Text">
+                </div>
+              </td>
+            </tr>
+          </table>

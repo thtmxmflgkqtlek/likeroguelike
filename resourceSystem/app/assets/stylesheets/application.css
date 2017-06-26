@@ -52,3 +52,58 @@ table{
 .div_button{
   padding: 10px;
 }
+
+
+/* モードセレクト画面 ここから */
+#modeSelect-container{
+  background-color: #ccc;
+  width: 90%;
+  height: 600px;
+  margin: auto;
+  background-image: url("topImage.gif");
+  background-size: cover;
+}
+
+#modeSelect-text{
+  text-align: right;
+  padding: 20px;
+}
+
+#modeSelect-button{
+  font-size: 25px;
+}
+/* ここまで */
+
+/* 取得アイテム一覧画面 ここから */
+.weapon-all, .weapon-all tr, .weapon-all td{
+  border: 1px solid #000;
+}
+
+.weapon-all td{
+  padding: 0 10px;
+}
+
+.weapon-name{
+  background-color: #ddf;
+}
+
+.weapon-header{
+  background-color: #aaf;
+}
+/* ここまで */
+
+
+/* ダンジョンマップUI ここから */
+.Full-map, .Full-map tr, .Full-map td, .Full-map th{
+  border: 1px solid #000;
+}
+
+.Full-map td{
+  padding: 0 10px;
+}
+
+.Full-map th{
+  background-color: #aaf;
+  padding: 0 10px;
+}
+/* ここまで */
