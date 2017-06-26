@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get 'weapon/index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -55,9 +54,18 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  
+
+  get "mode" => "manager#modeSelect", :as => :mode
+  get "dungeon" => "manager#dungeon", :as => :dungeon
+  get "matching" => "manager#matching", :as => :matching
+  get "battle" => "manager#battle", :as => :battle
+
+  post 'top/stage2' => 'top#stage2'
   post 'weapon/index' => 'weapon#index'
-  root:to => "top#index"
+  post 'weapon/show' => 'weapon#show'
+
+  root:to => "manager#modeSelect"
+
   match 'logout' => "session#destroy" ,via: :all
   match 'login' => "session#new" , via: :all
   resource :session, :only => [:create], :controller => 'session'

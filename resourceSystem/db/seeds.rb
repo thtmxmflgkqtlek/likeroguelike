@@ -277,3 +277,9 @@ Weapon.create(:id => 253, :name => '大剣', :health => 10, :attack => 10, :defe
 Weapon.create(:id => 254, :name => '大剣', :health => 10, :attack => 10, :defense => 15)
 Weapon.create(:id => 255, :name => 'HujitaSword', :health => 999, :attack => 999, :defense => 999)
 Weapon.create(:id => 256, :name => 'DebugSword', :health => 9999, :attack => 9999, :defense => 9999)
+
+# Quip.create(:user_id => 1, :health => 10, :attack => 1, :defense => 13)
+#
+# Bring.create(:user_id => 1, :weapon_id => 33)
+# Bring.create(:user_id => 1, :weapon_id => 43)
+# Bring.create(:user_id => 1, :weapon_id => 103)

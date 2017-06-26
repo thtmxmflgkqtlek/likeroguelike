@@ -1,2 +1,65 @@
-<h1>Weapon#show</h1>
-<p>Find me in app/views/weapon/show.html.erb</p>
+<h1>今回の取得アイテム</h1>
+<p>装備変更をする際は下のプルタブから</p>
+<table>
+<tr>
+  <td>名前</td>
+  <td>HP</td>
+  <td>ATK</td>
+  <td>DEF</td>
+</tr>
+  <% @datas.each do |data| %>
+<tr>
+  <div class="status" id="status">
+    <td><%= data.name %></td>
+    <td><%= data.health %></td>
+    <td><%= data.attack %></td>
+    <td><%= data.defense %></td>
+  </div>
+</tr>
+<% end %>
+</table>
+<h2>今までの取得してきたアイテム一覧</h2>
+<table>
+  <tr>
+    <td>名前</td>
+    <td>HP</td>
+    <td>ATK</td>
+    <td>DEF</td>
+  </tr>
+  <% @tas.each do |ta| %>
+<tr>
+<div class="status" id="status">
+  <td><%= ta.name %></td>
+  <td><%= ta.health %></td>
+  <td><%= ta.attack %></td>
+  <td><%= ta.defense %></td>
+</tr>
+<% end %>
+</table>
+
+<form class="form" id="form" action="http://localhost:3000/top/stage3" method="post">
+<select name="weapon">
+  <% @tas.each do |ta| %>
+<option value='name!<%= ta.name %>!HP!<%= ta.health %>!ATK!<%= ta.attack %>!DEF!<%= ta.defense %>'><%= ta.name %></option>
+<% end %>
+</select>
+
+<select name="weapon2">
+<% @tas.each do |ta| %>
+<option value='name!<%= ta.name %>!HP!<%= ta.health %>!ATK!<%= ta.attack %>!DEF!<%= ta.defense %>'><%= ta.name %></option>
+<% end %>
+</select>
+
+<select name="weapon3">
+<% @tas.each do |ta| %>
+<option value='name!<%= ta.name %>!HP!<%= ta.health %>!ATK!<%= ta.attack %>!DEF!<%= ta.defense %>'><%= ta.name %></option>
+<% end %>
+<input type="submit" name="" value="武器を所持して次のマップへ">
+</select>
+</form>
+
+<!--
+<%= link_to "次の階へ進む", dungeon_path, :class => 'btn btn-default' %>
+<%= link_to "モードセレクト画面へ戻る", mode_path, :class => 'btn btn-default' %>
+-->
+</div>
