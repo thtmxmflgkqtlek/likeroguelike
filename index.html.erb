@@ -9,10 +9,12 @@
 </tr>
   <% @datas.each do |data| %>
 <tr>
-  <td><%= data.name %></td>
-  <td><%= data.health %></td>
-  <td><%= data.attack %></td>
-  <td><%= data.defense %></td>
+  <div class="status" id="status">
+    <td><%= data.name %></td>
+    <td><%= data.health %></td>
+    <td><%= data.attack %></td>
+    <td><%= data.defense %></td>
+  </div>
 </tr>
 <% end %>
 </table>
@@ -20,10 +22,33 @@
 <table>
   <% @tas.each do |ta| %>
 <tr>
-<td><%= ta.name %></td>
-<td><%= ta.health %></td>
-<td><%= ta.attack %></td>
-<td><%= ta.defense %></td>
+<div class="status" id="status">
+  <td><%= ta.name %></td>
+  <td><%= ta.health %></td>
+  <td><%= ta.attack %></td>
+  <td><%= ta.defense %></td>
 </tr>
 <% end %>
 </table>
+
+<form class="form"  id="form" action="http://localhost:3000/top/stage2" method="get">
+<select name="weapon">
+  <% @tas.each do |ta| %>
+<option value='name!<%= ta.name %>!HP!<%= ta.health %>!ATK!<%= ta.attack %>!DEF!<%= ta.defense %>'><%= ta.name %></option>
+
+<% end %>
+<input type="submit" name="" value="武器を所持して次のマップへ">
+</select>
+</form>
+
+<form class="form"  id="form" action="http://localhost:3000/top/stage2" method="get">
+    <input type="hidden" id="status" name="status" value=0>
+    <input type="submit" class="form" name="" value="次のマップへ">
+    <input type="button" class="formbutton" name="" value="">
+</form>
+
+<!--
+<%= link_to "次の階へ進む", dungeon_path, :class => 'btn btn-default' %>
+<%= link_to "モードセレクト画面へ戻る", mode_path, :class => 'btn btn-default' %>
+-->
+</div>
