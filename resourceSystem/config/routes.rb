@@ -63,6 +63,9 @@ Rails.application.routes.draw do
   post 'top/stage2' => 'top#stage2'
   post 'weapon/index' => 'weapon#index'
   post 'weapon/show' => 'weapon#show'
+  post 'top/index' => 'top#index'
+  post 'weapon/update' => 'weapon#update'
+  # ボス戦画面用のルーティング post 'top/boss => 'top#boss'
 
   root:to => "manager#modeSelect"
 

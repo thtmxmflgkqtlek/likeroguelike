@@ -37,7 +37,7 @@
 <% end %>
 </table>
 
-<form class="form" id="form" action="http://localhost:3000/top/index" method="post">
+<form class="form" id="form" action="http://localhost:3000/top/boss" method="post">
 <select name="weapon">
   <% @tas.each do |ta| %>
 <option value='name!<%= ta.name %>!HP!<%= ta.health %>!ATK!<%= ta.attack %>!DEF!<%= ta.defense %>'><%= ta.name %></option>
@@ -54,7 +54,7 @@
 <% @tas.each do |ta| %>
 <option value='name!<%= ta.name %>!HP!<%= ta.health %>!ATK!<%= ta.attack %>!DEF!<%= ta.defense %>'><%= ta.name %></option>
 <% end %>
-<input type="submit" name="" value="武器を所持して次のマップへ">
+<input type="submit" name="" value="武器を装備してボスに挑む">
 </select>
 </form>
 
